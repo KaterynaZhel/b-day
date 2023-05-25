@@ -4,8 +4,8 @@
            with font-awesome or any other icon font library -->
       
            <li class="nav-item">
-            <a href={{ route('admin.celebrant') }} class="nav-link">
-              {{-- <i class="nav-icon fas fa-th"></i> --}}
+            <a href={{ route('admin.celebrant.index') }} class="nav-link">
+             
               <i class="nav-icon fas fa-birthday-cake"></i>
              
               <p>
@@ -14,15 +14,15 @@
             </a>
           </li>
       <li class="nav-item">
-        <a href={{ route('admin.user') }} class="nav-link">
+        <a href={{ route('admin.user.index') }} class="nav-link">
           <i class="nav-icon fas fa-unlock"></i>
             Адміністратори 
           </p>
         </a>
       </li>
       <li class="nav-item">
-        <a href={{ route('admin.greeting') }} class="nav-link">
-          {{-- <i class="nav-icon fas fa-th"></i> --}}
+        <a href={{ route('admin.greeting.index') }} class="nav-link">
+         
           <i class="nav-icon fas fa-comment-dots"></i>
          
           <p>

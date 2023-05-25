@@ -21,19 +21,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
-
-Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'], function () {
-
-    Route::group(['namespace' => 'User', 'prefix' => 'user'], function () {
-        Route::get('/', 'UserController@index')->name('admin.user');
-    });
-    Route::group(['namespace' => 'Celebrant', 'prefix' => 'celebrant'], function () {
-        Route::get('/', 'CelebrantController@index')->name('admin.celebrant');
-    });
-    Route::group(['namespace' => 'Greeting', 'prefix' => 'greeting'], function () {
-        Route::get('/', 'GreetingController@index')->name('admin.greeting');
-    });
+Route::group(['prefix' => 'admin'], function () {
+    Route::resources([
+        'user' => App\Http\Controllers\Admin\User\UserController::class,
+        'celebrant' => App\Http\Controllers\Admin\Celebrant\CelebrantController::class,
+        'greeting' => App\Http\Controllers\Admin\Greeting\GreetingController::class,
+    ], [
+            'as' => 'admin'
+        ]);
 });
-  
-        
