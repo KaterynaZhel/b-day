@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  bday_app:
+  bday_laravel_app:
     build:
       context: ./
       dockerfile: Dockerfile
