@@ -1,0 +1,47 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: bday
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    entrypoint: /entrypoint.sh
+    networks:
+      - bday-network
+  db:
+    image: mariadb:10.3
+    container_name: bday-db
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./docker/mysql_data:/var/lib/mysql
+    networks:
+      - bday-network
+  npm:
+    image: node:18
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    entrypoint: ['npm','run','installAndBuild', '--no-bin-links']
+    networks:
+      - bday-network
+  nginx:
+    image: nginx:alpine
+    container_name: bday-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d/
+    networks:
+      - bday-network
+networks:
+  bday-network:
