@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: bday-app
+    container_name: bday-laravel-app
     restart: unless-stopped
     env_file: .env
     working_dir: /var/www/
