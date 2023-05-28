@@ -1,10 +1,7 @@
 version: "3.7"
 services:
-  app:
+  bday_app:
     build:
-      args:
-        user: bday
-        uid: 1000
       context: ./
       dockerfile: Dockerfile
     container_name: bday-app
