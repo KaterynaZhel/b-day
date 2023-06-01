@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,6 @@ Route::group(['prefix' => 'admin'], function () {
         'celebrant' => App\Http\Controllers\Admin\Celebrant\CelebrantController::class,
         'greeting' => App\Http\Controllers\Admin\Greeting\GreetingController::class,
     ], [
-            'as' => 'admin'
-        ]);
+        'as' => 'admin'
+    ]);
 });
