@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Casts\CelebrantPosition;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -18,22 +18,11 @@ class CelebrantFactory extends Factory
     public function definition(): array
     {
         return [
-            'lastname' => fake()->name(),
-            'firstname' => fake()->name(),
+            'lastname' => fake()->lastName(),
+            'firstname' => fake()->firstName(),
             'middlename' => fake()->name(),
             'birthday' => fake()->date('Y-m-d'),
-            'position' => Str::random(10),
-            
+            'position' => fake()->randomElement(CelebrantPosition::$positions),
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }

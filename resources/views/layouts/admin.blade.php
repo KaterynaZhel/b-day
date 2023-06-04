@@ -15,6 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       href={{ asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href={{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}>
+    <link rel="stylesheet" href={{ asset('adminlte/plugins/daterangepicker/daterangepicker.css') }}>
     <!-- Theme style -->
     <link rel="stylesheet" href={{ asset('adminlte/dist/css/adminlte.min.css') }}>
   </head>
@@ -95,21 +96,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootstrap 4 -->
     <script src={{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}></script>
 
-
+    <!-- custom-file-input -->
     <script src="{{ asset('adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
     <!-- daterangepicker -->
     <script src="{{ asset('adminlte/plugins/moment/moment.min.js')}}"></script>
     <script src="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
 
-    <script>
-      $(function () {
-        //   //Date picker
-        //   $('#birthday').datetimepicker({
-        //     format: 'L'
-        //   });
-        bsCustomFileInput.init();
-      })
-    </script>
+
+    @yield('custom-script')
 
     <!-- AdminLTE App -->
     <script src={{ asset('adminlte/dist/js/adminlte.min.js') }}></script>
