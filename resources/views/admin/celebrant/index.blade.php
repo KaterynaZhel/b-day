@@ -16,7 +16,7 @@
                 </label>
 
                 <a class="btn btn-primary btn-sm float-right" href="{{route('admin.celebrant.create')}}" align="right">
-                    Створити іменинника
+                    Додати іменинника
                 </a>
 
                 <!-- </div> -->
@@ -53,7 +53,7 @@
                                     @if(!$celebrant->photo)
                                     <img src="{{asset('adminlte/dist/img/avatar.png')}}" style="height:30px;" alt="">
                                     @else
-                                    <img src="{{public_path($celebrant->photo)}}" alt="">
+                                    <img src="{{asset(Storage::url($celebrant->photo))}}" alt="">
                                     @endif
                                 </td>
                                 <td>{{$celebrant->lastname}}</td>
