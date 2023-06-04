@@ -76,15 +76,8 @@ class CelebrantController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // return redirect()->route('contact-data-one', $id)->with('success', 'Повідомлення було оновлено');
-
         $celebrant = Celebrant::find($id);
-        $celebrant->photo = $request->input('photo');
-        $celebrant->lastname = $request->input('lastname');
-        $celebrant->firstname = $request->input('firstname');
-        $celebrant->middlename = $request->input('middlename');
-        $celebrant->birthday = $request->input('birthday');
-        $celebrant->position = $request->input('position');
+        $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'position']));
         $celebrant->save();
         return redirect('admin/celebrant')->withSuccess('Іменинник був успішно оновлений');
     }
