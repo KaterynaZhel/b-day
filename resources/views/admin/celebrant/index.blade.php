@@ -11,15 +11,22 @@
         <div class="card-header">
             <h3 class="card-title">Таблиця іменинників</h3>
         </div>
+<<<<<<< HEAD
 
         <div class="card-body">
             <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div>
                     <!-- <div id="example1_filter" class="dataTables_filter"> -->
+=======
+        <div class="card-body">
+            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div>
+>>>>>>> develop
                     <label>
                         Пошук:
                         <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
                     </label>
+<<<<<<< HEAD
 
                     <a class="btn btn-primary btn-sm float-right" href="{{ route('admin.celebrant.create') }}"
                         align="right">
@@ -27,6 +34,12 @@
                     </a>
 
                     <!-- </div> -->
+=======
+                    <a class="btn btn-primary btn-sm float-right" href="{{ route('admin.celebrant.create') }}"
+                        align="right">
+                        Додати іменинника
+                    </a>
+>>>>>>> develop
                 </div>
                 <div class=" row">
                     <div class="col-sm-12">
@@ -68,7 +81,11 @@
                                                 <img src="{{ asset('adminlte/dist/img/avatar.png') }}" style="height:30px;"
                                                     alt="">
                                             @else
+<<<<<<< HEAD
                                                 <img src="{{ public_path($celebrant->photo) }}" alt="">
+=======
+                                                <img src="{{ asset(Storage::url($celebrant->photo)) }}" alt="">
+>>>>>>> develop
                                             @endif
                                         </td>
                                         <td>{{ $celebrant->lastname }}</td>
@@ -98,7 +115,10 @@
                                         </td>
                                     </tr>
                                 @endforeach
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -110,15 +130,21 @@
                                     <th rowspan="1" colspan="1">Дата народження</th>
                                     <th rowspan="1" colspan="1">Роль</th>
                                     <th rowspan="1" colspan="1"></th>
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> develop
                 <div class="row">
                     <div class="col-sm-12 col-md-5">
                         <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
@@ -152,7 +178,10 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
         </div>
         <!-- TODO: create pagination -->
         <!-- {{ $celebrants->links() }} -->
