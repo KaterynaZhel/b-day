@@ -70,7 +70,9 @@ class CelebrantController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $celebrant = Celebrant::find($id);
+
+        return view('admin.celebrant.edit', ['celebrant' => $celebrant]);
     }
 
     /**
@@ -78,7 +80,10 @@ class CelebrantController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $celebrant = Celebrant::find($id);
+        $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'position']));
+        $celebrant->save();
+        return redirect('admin/celebrant')->withSuccess('Іменинник був успішно оновлений');
     }
 
     /**
