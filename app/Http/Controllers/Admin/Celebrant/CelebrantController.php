@@ -15,7 +15,7 @@ class CelebrantController extends Controller
      */
     public function index()
     {
-        $celebrants = Celebrant::orderBy('id', 'desc')->paginate(20);
+        $celebrants = Celebrant::orderBy('id', 'desc')->paginate(10);
         return view('admin.celebrant.index', ['celebrants' => $celebrants]);
     }
 
