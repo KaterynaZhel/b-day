@@ -9,7 +9,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.btn-danger').click(function () {
+    $('.destroy-btn').click(function () {
         var res = confirm('Ви дійсно бажаєте видалити даного Іменинника з бази даних Компанії?');
         if(!res){
             return false;

@@ -86,7 +86,7 @@
                                                 action="{{ route('admin.celebrant.destroy', $celebrant->id) }}">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                <button type="submit" class="btn destroy-btn btn-danger btn-sm"><i
                                                         class="fas fa-trash">
                                                     </i></button>
                                             </form>
