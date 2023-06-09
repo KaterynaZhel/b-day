@@ -45,7 +45,8 @@
                                         colspan="1">
                                         По-батькові</th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                        colspan="1">Дата
+                                        colspan="1" style="width: 100px;">
+                                        Дата
                                         народження</th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
                                         colspan="1">Роль
@@ -86,7 +87,7 @@
                                                 action="{{ route('admin.celebrant.destroy', $celebrant->id) }}">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="btn destroy-btn btn-danger btn-sm"><i
+                                                <button type="submit" class="btn btn-danger btn-sm"><i
                                                         class="fas fa-trash">
                                                     </i></button>
                                             </form>
@@ -110,39 +111,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-md-5">
-                        <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
-                            Показано від 1 до 20 із 57 записів</div>
-                    </div>
                     <div class="col-sm-12 col-md-7">
-                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                            <ul class="pagination">
-                                <li class="paginate_button page-item previous disabled" id="example1_previous"><a
-                                        href="#" aria-controls="example1" data-dt-idx="0" tabindex="0"
-                                        class="page-link">Попередній</a>
-                                </li>
-                                <li class="paginate_button page-item active"><a href="#" aria-controls="example1"
-                                        data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                        data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                        data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                        data-dt-idx="4" tabindex="0" class="page-link">4</a></li>
-                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                        data-dt-idx="5" tabindex="0" class="page-link">5</a></li>
-                                <li class="paginate_button page-item "><a href="#" aria-controls="example1"
-                                        data-dt-idx="6" tabindex="0" class="page-link">6</a></li>
-                                <li class="paginate_button page-item next" id="example1_next"><a href="#"
-                                        aria-controls="example1" data-dt-idx="7" tabindex="0"
-                                        class="page-link">Наступний</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {{ $celebrants->links('admin.pagination') }}
                     </div>
                 </div>
             </div>
         </div>
-        <!-- TODO: create pagination -->
-        <!-- {{ $celebrants->links() }} -->
     @endsection
