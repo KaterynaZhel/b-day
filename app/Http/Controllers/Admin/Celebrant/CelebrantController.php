@@ -91,6 +91,7 @@ class CelebrantController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Celebrant::find($id)->delete();
+        return redirect('admin/celebrant')->withSuccess('Іменинник успішно видалений з бази даних Компанії');
     }
 }
