@@ -19,14 +19,8 @@ class AdminMiddleware
         // admin role == 1
         // user role == 0
 
-        if (Auth::check()) {
-            if (Auth::user()->role == '1') {
-                return $next($request);
-            } else {
-                return redirect('/home')->with('message', 'Access denied because you are not an Admin');
-            }
-        } else {
-            return redirect('/login')->with('message', 'Log in to access the website info');
+        if (!Auth::check() || !Auth::user()->role == '1') {
+            return redirect('/login')->with('message', 'Access denied because you are not an Admin');
         }
         return $next($request);
     }
