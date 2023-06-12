@@ -17,7 +17,7 @@
     @endif
 
 
-    <form action="{{route('admin.celebrant.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('admin.celebrants.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
             <div class="form-group">

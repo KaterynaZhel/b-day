@@ -16,7 +16,7 @@ class CelebrantController extends Controller
     public function index()
     {
         $celebrants = Celebrant::orderBy('id', 'desc')->paginate(10);
-        return view('admin.celebrant.index', ['celebrants' => $celebrants]);
+        return view('admin.celebrants.index', ['celebrants' => $celebrants]);
     }
 
     /**
@@ -24,7 +24,7 @@ class CelebrantController extends Controller
      */
     public function create()
     {
-        return view('admin.celebrant.create', ['celebrant_positions' => CelebrantPosition::$positions]);
+        return view('admin.celebrants.create', ['celebrant_positions' => CelebrantPosition::$positions]);
     }
 
     /**
@@ -51,7 +51,7 @@ class CelebrantController extends Controller
 
         $celebrant->save();
 
-        return redirect()->route('admin.celebrant.index');
+        return redirect()->route('admin.celebrants.index');
     }
 
 
@@ -62,7 +62,7 @@ class CelebrantController extends Controller
     {
         $celebrant = Celebrant::find($id);
 
-        return view('admin.celebrant.show', ['celebrant' => $celebrant]);
+        return view('admin.celebrants.show', ['celebrant' => $celebrant]);
     }
 
     /**
@@ -72,7 +72,7 @@ class CelebrantController extends Controller
     {
         $celebrant = Celebrant::find($id);
 
-        return view('admin.celebrant.edit', ['celebrant' => $celebrant]);
+        return view('admin.celebrants.edit', ['celebrant' => $celebrant]);
     }
 
     /**

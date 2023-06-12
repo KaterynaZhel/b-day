@@ -1,24 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin\User;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CelebrantResource;
+use App\Models\Celebrant;
+use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CelebrantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return view('admin.users.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
         //
     }
@@ -36,15 +30,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return new CelebrantResource(Celebrant::findOrFail($id));
     }
 
     /**
