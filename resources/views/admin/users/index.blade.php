@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section('content')
-привітання
+Адміністратори
 @endsection
