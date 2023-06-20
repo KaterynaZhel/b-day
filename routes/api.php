@@ -22,5 +22,5 @@ Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::c
     'show'
 ]);
 Route::apiResource('greetings', App\Http\Controllers\Api\GreetingController::class)->only([
-    'store'
+    'store',
 ]);
