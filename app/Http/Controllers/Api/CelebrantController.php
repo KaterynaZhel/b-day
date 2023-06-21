@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Filters\CelebrantFilter;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
 
@@ -13,9 +12,36 @@ class CelebrantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(CelebrantFilter $filter)
+    public function index(Request $request)
     {
-        return Celebrant::filter($filter)->paginate(10);
+
+        $query = Celebrant::limit(10);
+
+        if ($request->filled('firstname')) {
+            $firstname = $request->get('firstname');
+            $query->where('firstname', 'like', "%$firstname%");
+        }
+
+        if ($request->filled('lastname')) {
+            $lastname = $request->get('lastname');
+            $query->where('lastname', 'like', "%$lastname%");
+        }
+
+        if ($request->filled('position')) {
+            $position = $request->get('position');
+            $query->where('position', 'like', "%$position%");
+        }
+
+        if ($request->filled('birthday')) {
+            $birthday = $request->get('birthday');
+            $query->where('birthday', 'like', "%$birthday%");
+        }
+
+        $celebrants = $query->paginate(10);
+
+        return CelebrantResource::collection($celebrants);
+
+        // dd($celebrants);
     }
 
     /**
