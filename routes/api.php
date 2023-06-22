@@ -18,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::class);
+Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::class)->only([
+    'show'
+]);
+Route::apiResource('greetings', App\Http\Controllers\Api\GreetingController::class)->only([
+    'store',
+]);
