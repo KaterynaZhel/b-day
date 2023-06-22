@@ -3,6 +3,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Celebrant;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::class)->only([
+    'index'
+]);
+
 Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::class)->only([
     'show'
 ]);

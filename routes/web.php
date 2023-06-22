@@ -31,6 +31,6 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
         'celebrants' => App\Http\Controllers\Admin\Celebrant\CelebrantController::class,
         'greetings' => App\Http\Controllers\Admin\Greeting\GreetingController::class,
     ], [
-            'as' => 'admin'
-        ]);
+        'as' => 'admin'
+    ]);
 });

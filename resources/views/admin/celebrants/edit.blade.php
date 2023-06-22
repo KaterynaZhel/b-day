@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="card card-primary">
+<div class="card">
     <div class="card-header">
         <h3 class="card-title">Редагування іменинника</h3>
     </div>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Редагувати</button>
+                <button type="submit" class="btn btn-primary">Зберегти зміни</button>
             </div>
     </form>
 </div>

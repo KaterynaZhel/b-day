@@ -24,7 +24,6 @@ class CelebrantResource extends JsonResource
             'middlename' => $this->maidlename,
             'birthday' => $this->birthday,
             'position' => $this->position,
-
         ];
     }
 }

@@ -83,7 +83,7 @@ class CelebrantController extends Controller
         $celebrant = Celebrant::find($id);
         $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'position']));
         $celebrant->save();
-        return redirect('admin/celebrant')->withSuccess('Іменинник був успішно оновлений');
+        return redirect('admin/celebrants')->withSuccess('Іменинник був успішно оновлений');
     }
 
     /**
@@ -92,6 +92,6 @@ class CelebrantController extends Controller
     public function destroy(string $id)
     {
         Celebrant::find($id)->delete();
-        return redirect('admin/celebrant')->withSuccess('Іменинник успішно видалений з бази даних Компанії');
+        return redirect('admin/celebrants')->withSuccess('Іменинник успішно видалений з бази даних Компанії');
     }
 }
