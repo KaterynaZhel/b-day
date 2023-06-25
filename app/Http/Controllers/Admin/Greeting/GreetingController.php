@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Greeting;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Greeting;
 
 class GreetingController extends Controller
 {
@@ -12,7 +13,8 @@ class GreetingController extends Controller
      */
     public function index()
     {
-        return view('admin.greetings.index');
+        $greetings = Greeting::orderBy('id', 'desc')->paginate(10);
+        return view('admin.greetings.index', ['greetings' => $greetings]);
     }
 
     /**
