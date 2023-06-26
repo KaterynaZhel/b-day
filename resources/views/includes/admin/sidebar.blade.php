@@ -26,7 +26,7 @@
                 <i class="nav-icon fas fa-comment-dots"></i>
 
                 <p>
-                    Привітання
+                    Привітання від гостей
                 </p>
             </a>
         </li>

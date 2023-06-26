@@ -71,7 +71,6 @@ class CelebrantController extends Controller
     public function edit(string $id)
     {
         $celebrant = Celebrant::find($id);
-
         return view('admin.celebrants.edit', ['celebrant' => $celebrant]);
     }
 
