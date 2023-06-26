@@ -15,4 +15,11 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $('.destroy-btn-greeting').click(function () {
+        var res_greeting = confirm('Ви дійсно бажаєте видалити дане Привітання від Гостя?');
+        if (!res_greeting) {
+            return false;
+        }
+    });
 })
