@@ -31,3 +31,5 @@ Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::c
 Route::apiResource('greetings', App\Http\Controllers\Api\GreetingController::class)->only([
     'store',
 ]);
+
+Route::get('/greetings/{celebrant_id}', [App\Http\Controllers\Api\GreetingController::class, 'index']);

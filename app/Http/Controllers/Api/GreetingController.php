@@ -12,9 +12,19 @@ class GreetingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $celebrant_id)
     {
-        //
+
+        validator(['celebrant_id' => $celebrant_id], [
+            'celebrant_id' => 'numeric',
+        ])->validate();
+
+        $greetings = Greeting::where('celebrant_id', $celebrant_id)
+            ->orderByDesc('updated_at')
+            ->paginate(25);
+
+        return GreetingResource::collection($greetings);
+
     }
 
     /**
