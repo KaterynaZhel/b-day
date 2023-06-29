@@ -27,9 +27,6 @@
                         <input type="file" class="custom-file-input" name="photoFile" id="exampleInputFile">
                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                     </div>
-                    <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
-                    </div>
                 </div>
             </div>
 
@@ -64,7 +61,7 @@
 
 
             <div class="form-group">
-                <label for="position">Роль</label>
+                <label for="position">Посада</label>
                 <select id="position" name="position" class="form-control custom-select">
                     <option></option>
                     @foreach($celebrant_positions as $position)
