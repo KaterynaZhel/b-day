@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Celebrant;
 
 use App\Casts\CelebrantPosition;
+use App\Http\Requests\CelebrantRequest;
 use App\Models\Celebrant;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\Rule;
+
 
 class CelebrantController extends Controller
 {
@@ -30,18 +30,8 @@ class CelebrantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CelebrantRequest $request)
     {
-        $validated = $request->validate([
-            'lastname' => 'required|max:100|min:2',
-            'firstname' => 'required|max:100|min:2',
-            'middlename' => 'nullable|max:100|min:2',
-            'birthday' => 'required|date_format:Y-m-d',
-            'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
-            'photoFile' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-        ]);
-
-        // Celebrant::create($request->all());
         $celebrant = new Celebrant($request->all());
 
         if (is_uploaded_file($request->file('photoFile'))) {
@@ -77,7 +67,7 @@ class CelebrantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CelebrantRequest $request, string $id)
     {
         $celebrant = Celebrant::find($id);
         $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'position']));
