@@ -34,15 +34,16 @@
                             <tbody>
                                 @foreach ($greetings as $greeting)
                                     <tr class="odd">
-                                        <td class="dtr-control sorting_1" tabindex="0">{{ $greeting->celebrant_id }}</td>
+                                        <td class="dtr-control sorting_1" tabindex="0">{{ $greeting->id }}</td>
                                         <td>{{ $greeting->name }}</td>
                                         <td>{{ $greeting->message }}</td>
+                                        <td>{{ $greeting->created_at->format('Y-m-d') }}</td>
                                         <td class="project-actions text-right">
                                             <form method="post"
                                                 action="{{ route('admin.greetings.destroy', $greeting->id) }}">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="btn destroy-btn btn-danger btn-sm">
+                                                <button type="submit" class="btn destroy-btn-greeting btn-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
