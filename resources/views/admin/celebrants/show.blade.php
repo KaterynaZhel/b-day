@@ -16,7 +16,7 @@
                 <b>Дата народження</b> <a class="float-right">{{$celebrant->birthday}}</a>
             </li>
             <li class="list-group-item">
-                <b>Посада</b> <a class="float-right">{{$celebrant->position}}</a>
+                <b>Роль</b> <a class="float-right">{{$celebrant->position}}</a>
             </li>
 
         </ul>

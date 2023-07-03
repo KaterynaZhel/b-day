@@ -61,7 +61,7 @@
 
 
             <div class="form-group">
-                <label for="position">Посада</label>
+                <label for="position">Роль</label>
                 <select id="position" name="position" class="form-control custom-select">
                     <option></option>
                     @foreach($celebrant_positions as $position)
