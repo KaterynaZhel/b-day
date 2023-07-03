@@ -6,6 +6,7 @@ use App\Casts\CelebrantPosition;
 use App\Models\Celebrant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\GreetingCompany;
 use Illuminate\Validation\Rule;
 
 class CelebrantController extends Controller
@@ -61,8 +62,8 @@ class CelebrantController extends Controller
     public function show(string $id)
     {
         $celebrant = Celebrant::find($id);
-
-        return view('admin.celebrants.show', ['celebrant' => $celebrant]);
+        $greetingsCompany = GreetingCompany::all()->where('celebrant_id', "==", $id);
+        return view('admin.celebrants.show', compact('celebrant', 'greetingsCompany'));
     }
 
     /**
