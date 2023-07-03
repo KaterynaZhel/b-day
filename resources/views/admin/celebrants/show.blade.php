@@ -15,7 +15,7 @@
                     <b>Дата народження</b> <a class="float-right">{{ $celebrant->birthday }}</a>
                 </li>
                 <li class="list-group-item">
-                    <b>Роль</b> <a class="float-right">{{ $celebrant->position }}</a>
+                    <b>Посада</b> <a class="float-right">{{ $celebrant->position }}</a>
                 </li>
             </ul>
 
@@ -29,8 +29,6 @@
             </div>
 
             @include('includes.admin.showGreetingsCompany')
-
         </div>
     </div>
 @endsection
- 
