@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GreetingStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('greetings', function (Blueprint $table) {
+        Schema::create('greeting_companies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('message');
+            $table->text('message_company');
+            $table->string('name_company');
             $table->foreignId('celebrant_id')->constrained();
+            $table->string('status')->default(GreetingStatusEnum::Ready);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('greetings');
+        Schema::dropIfExists('greeting_companies');
     }
 };
