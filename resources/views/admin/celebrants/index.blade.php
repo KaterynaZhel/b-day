@@ -45,7 +45,8 @@
                                     народження</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Посада
                                 </th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"></th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">
+                                    Інструменти</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,7 +91,7 @@
                                 <th rowspan="1" colspan="1">По-батькові</th>
                                 <th rowspan="1" colspan="1">Дата народження</th>
                                 <th rowspan="1" colspan="1">Роль</th>
-                                <th rowspan="1" colspan="1"></th>
+                                <th rowspan="1" colspan="1">Інструменти</th>
                             </tr>
                         </tfoot>
                     </table>
