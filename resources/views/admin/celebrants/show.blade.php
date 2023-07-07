@@ -19,5 +19,16 @@
             </li>
 
         </ul>
+        <div class="row mb-3">
+            <div class="col-sm-12">
+                <a class="btn btn-primary btn-sm float-right"
+                    href="{{ route('admin.celebrants.greetingsCompany.create', $celebrant->id) }}">
+                    Залишити привітання
+                </a>
+            </div>
+        </div>
+
+        @include('includes.admin.showGreetingsCompany')
     </div>
-    @endsection
+</div>
+@endsection
