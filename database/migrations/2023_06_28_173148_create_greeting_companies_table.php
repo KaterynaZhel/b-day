@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('message_company');
             $table->string('name_company');
             $table->foreignId('celebrant_id')->constrained();
-            $table->string('status')->default(GreetingStatusEnum::Ready);
+            $table->string('status')->default(GreetingStatusEnum::Ready->value);
             $table->timestamps();
         });
     }
