@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class GreetingCompanyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      */
-    public function index(string $celebrant_id)
+    public function show(string $celebrant_id)
     {
         validator(['celebrant_id' => $celebrant_id], [
             'celebrant_id' => 'numeric',
