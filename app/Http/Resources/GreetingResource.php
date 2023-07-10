@@ -20,7 +20,7 @@ class GreetingResource extends JsonResource
             'name' => $this->name,
             'message' => $this->message,
             'celebrant_id' => $this->celebrant_id,
-
+            'created_at' => $this->created_at->format('d-m-Y'),
         ];
     }
 }
