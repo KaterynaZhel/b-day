@@ -29,17 +29,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($greetingsCompany as $greeting)
+                            @foreach ($greetingsCompany as $greetingCompany)
                                 <tr class="odd">
-                                    <td class="dtr-control sorting_1" tabindex="0">{{ $greeting->id }}</td>
-                                    <td>{{ $greeting->message_company }}</td>
-                                    <td>{{ $greeting->name_company }}</td>
-                                    <td>{{ $greeting->status }}</td>
-                                    <td class="project-actions text-right">
+                                    <td class="dtr-control sorting_1" tabindex="0">{{ $greetingCompany->id }}</td>
+                                    <td>{{ $greetingCompany->message_company }}</td>
+                                    <td>{{ $greetingCompany->name_company }}</td>
+                                    <td>{{ $greetingCompany->status }}</td>
+                                    <td class="project-actions d-flex justify-content-center">
+                                        <a class="btn btn-info btn-sm" style="width:33px; height:30px; margin:4px 4px;"
+                                            href="{{ route('admin.celebrants.greetingsCompany.edit', [$greetingCompany->celebrant_id, $greetingCompany->id]) }}">
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                        </a>
                                         <form method="post" action="#">
                                             @method('delete')
                                             @csrf
-                                            <button type="submit" class="btn destroy-btn btn-danger btn-sm">
+                                            <button type="submit" class="btn destroy-btn btn-danger btn-sm"
+                                                style="width:33px; height:30px; margin:4px 4px;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
