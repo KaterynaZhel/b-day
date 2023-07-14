@@ -20,7 +20,7 @@ class GreetingCompanyController extends Controller
         ])->validate();
 
         $greetingsCompany = GreetingCompany::where('celebrant_id', $celebrant_id)
-            ->where('status', GreetingStatusEnum::Ready)
+            ->where('publish_at', '<=', date('Y-m-d'))
             ->orderByDesc('updated_at')->first();
 
 
