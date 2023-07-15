@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Enums\GreetingStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GreetingCompanyResource;
 use App\Models\GreetingCompany;
-use Illuminate\Http\Request;
 
 class GreetingCompanyController extends Controller
 {
@@ -21,7 +19,7 @@ class GreetingCompanyController extends Controller
 
         $greetingsCompany = GreetingCompany::where('celebrant_id', $celebrant_id)
             ->where('publish_at', '<=', date('Y-m-d'))
-            ->orderByDesc('updated_at')->first();
+            ->orderByDesc('id')->first();
 
 
         return new GreetingCompanyResource($greetingsCompany);

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Greeting;
 
+use App\Models\Celebrant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\GreetingCompany;
@@ -30,13 +32,31 @@ class GreetingCompanyController extends Controller
      */
     public function store(Request $request, $celebrant_id)
     {
-        $validated = $request->validate([
+        $validated                    = $request->validate([
             'message_company' => 'required|min:2|max:500',
             'name_company' => 'required|min:2|max:30',
             'celebrant_id' => 'numeric|exists:celebrants,id',
         ]);
-        $greetingsCompany = new GreetingCompany($request->all() + ['celebrant_id' => $celebrant_id]);
+        $greetingsCompany             = new GreetingCompany($request->all() + ['celebrant_id' => $celebrant_id]);
+        $greetingsCompany->publish_at = self::GreetingDate($celebrant_id);
         $greetingsCompany->save();
         return redirect()->route('admin.celebrants.show', $celebrant_id);
+    }
+
+    /**
+     * Generate date for publishing greeting company
+     * @param int $celebrant_id
+     * @return mixed
+     */
+    public static function GreetingDate(int $celebrant_id)
+    {
+        $birthday            = Celebrant::where('id', $celebrant_id)->value('birthday');
+        $birthdayCurrentYear = Carbon::create($birthday)->year(now()->format('Y'))->format('Y-m-d');
+        if (Carbon::create($birthdayCurrentYear)->gt(Carbon::now())) {
+            return $birthdayCurrentYear;
+        } else {
+
+            return Carbon::create($birthdayCurrentYear)->addYear(1)->format('Y-m-d');
+        }
     }
 }
