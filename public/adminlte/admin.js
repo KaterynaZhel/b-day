@@ -22,4 +22,11 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $('.destroy-btn-greeting-сompany').click(function () {
+        var res_greeting = confirm('Ви дійсно бажаєте видалити дане Привітання від Компанії?');
+        if (!res_greeting) {
+            return false;
+        }
+    });
 })

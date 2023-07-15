@@ -41,10 +41,13 @@
                                             <i class="fas fa-pencil-alt">
                                             </i>
                                         </a>
-                                        <form method="post" action="#">
+                                        <form
+                                            action="{{ route('admin.celebrants.greetingsCompany.destroy', [$greetingCompany->celebrant_id, $greetingCompany->id]) }}"
+                                            method="post">
                                             @method('delete')
                                             @csrf
-                                            <button type="submit" class="btn destroy-btn btn-danger btn-sm"
+                                            <button type="submit"
+                                                class="btn destroy-btn-greeting-сompany btn-danger btn-sm"
                                                 style="width:33px; height:30px; margin:4px 4px;">
                                                 <i class="fas fa-trash"></i>
                                             </button>
