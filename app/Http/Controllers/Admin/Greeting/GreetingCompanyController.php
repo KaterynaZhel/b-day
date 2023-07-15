@@ -39,4 +39,29 @@ class GreetingCompanyController extends Controller
         $greetingsCompany->save();
         return redirect()->route('admin.celebrants.show', $celebrant_id);
     }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($celebrant_id, GreetingCompany $greetingsCompany)
+    {
+        return view('admin.greetingsCompany.edit', compact('celebrant_id', 'greetingsCompany'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update($celebrant_id, GreetingCompany $greetingsCompany)
+    {
+        $greetingsCompany->update(request(['message_company', 'name_company']));
+        return redirect()->route('admin.celebrants.show', $celebrant_id)->withSuccess('Привітання від Компанії було успішно оновлене');
+    }
 }
