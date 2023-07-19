@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Enums\GreetingStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GreetingCompanyResource;
 use App\Models\GreetingCompany;
-use Illuminate\Http\Request;
 
 class GreetingCompanyController extends Controller
 {
@@ -20,8 +18,8 @@ class GreetingCompanyController extends Controller
         ])->validate();
 
         $greetingsCompany = GreetingCompany::where('celebrant_id', $celebrant_id)
-            ->where('status', GreetingStatusEnum::Ready)
-            ->orderByDesc('updated_at')->first();
+            ->where('publish_at', '<=', date('Y-m-d'))
+            ->orderByDesc('id')->first();
 
 
         return new GreetingCompanyResource($greetingsCompany);

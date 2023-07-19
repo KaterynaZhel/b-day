@@ -15,4 +15,5 @@ class GreetingCompany extends Model
     protected $casts = [
         'status' => GreetingStatusEnum::class
     ];
+
 }

@@ -19,13 +19,17 @@
                                 <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
                                     colspan="1" aria-sort="ascending">id</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                    colspan="1">Текст вітання</th>
+                                    colspan="1">Текст
+                                    вітання</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                    colspan="1">Назва Компанії</th>
+                                    colspan="1">Назва
+                                    Компанії</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                    colspan="1">Статус вітання</th>
+                                    colspan="1">Дата
+                                    публікації</th>
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                    colspan="1">Інструменти</th>
+                                    colspan="1">
+                                    Інструменти</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,7 +38,7 @@
                                     <td class="dtr-control sorting_1" tabindex="0">{{ $greetingCompany->id }}</td>
                                     <td>{{ $greetingCompany->message_company }}</td>
                                     <td>{{ $greetingCompany->name_company }}</td>
-                                    <td>{{ $greetingCompany->status }}</td>
+                                    <td>{{ $greetingCompany->publish_at }}</td>
                                     <td class="project-actions d-flex justify-content-center">
                                         <a class="btn btn-info btn-sm" style="width:33px; height:30px; margin:4px 4px;"
                                             href="{{ route('admin.celebrants.greetingsCompany.edit', [$greetingCompany->celebrant_id, $greetingCompany->id]) }}">
