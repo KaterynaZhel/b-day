@@ -44,14 +44,6 @@ class GreetingCompanyController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit($celebrant_id, GreetingCompany $greetingsCompany)
@@ -68,6 +60,14 @@ class GreetingCompanyController extends Controller
         return redirect()->route('admin.celebrants.show', $celebrant_id)->withSuccess('Привітання від Компанії було успішно оновлене');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($celebrant_id, GreetingCompany $greetingsCompany)
+    {
+        $greetingsCompany->delete();
+        return redirect()->route('admin.celebrants.show', $celebrant_id)->withSuccess('Привітання від Компанії було успішно видалено');
+    }
 
     /**
      * Generate date for publishing greeting company

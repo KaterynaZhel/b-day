@@ -38,7 +38,7 @@
                                 <td>{{ $greeting->name }}</td>
                                 <td>{{ $greeting->message }}</td>
                                 <td>{{ $greeting->created_at->format('Y-m-d') }}</td>
-                                <td class="project-actions text-right">
+                                <td class="project-actions d-flex justify-content-center">
                                     <form method="post" action="{{ route('admin.greetings.destroy', $greeting->id) }}">
                                         @method('delete')
                                         @csrf
