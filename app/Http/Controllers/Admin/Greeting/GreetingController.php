@@ -30,7 +30,14 @@ class GreetingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'message' => 'required|min:2|max:500',
+            'name' => 'required|min:2|max:30',
+            'celebrant_id' => 'numeric|exists:celebrants,id',
+        ]);
+        $greetings = new Greeting($request->all());
+        $greetings->save();
+        return redirect()->route('admin.greetings.index');
     }
 
     /**
@@ -62,6 +69,7 @@ class GreetingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Greeting::find($id)->delete();
+        return redirect()->route('admin.greetings.index')->withSuccess('Привітання від Гостя було успішно видалено');
     }
 }
