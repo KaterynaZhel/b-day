@@ -15,7 +15,7 @@ class CelebrantPhoto implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value ? asset(Storage::url($value)) : asset('adminlte/dist/img/avatar.png');
+        return $value ? asset(Storage::url($value)) : asset('adminlte/dist/img/smile.png');
     }
 
     /**
