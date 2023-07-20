@@ -10,8 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('greetings', function (Blueprint $table) {
-            $table->text('message')->change();
+        Schema::table('greeting_companies', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 
@@ -20,11 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('greetings', function (Blueprint $table) {
-            $table->dropColumn('message');
-        });
-        Schema::table('greetings', function (Blueprint $table) {
-            $table->string('message');
+        Schema::table('greeting_companies', function (Blueprint $table) {
+            $table->string('status')->default('');
         });
     }
 };

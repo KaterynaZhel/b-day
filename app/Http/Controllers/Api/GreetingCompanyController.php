@@ -19,7 +19,7 @@ class GreetingCompanyController extends Controller
 
         $greetingsCompany = GreetingCompany::where('celebrant_id', $celebrant_id)
             ->where('publish_at', '<=', date('Y-m-d'))
-            ->orderByDesc('id')->first();
+            ->orderByDesc('id')->firstOrFail();
 
 
         return new GreetingCompanyResource($greetingsCompany);
