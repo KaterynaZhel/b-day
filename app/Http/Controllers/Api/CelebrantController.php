@@ -77,7 +77,7 @@ class CelebrantController extends Controller
             $query->whereDay('birthday', '<=', $daytTo);
         }
 
-        $celebrants = $query->paginate(10);
+        $celebrants = $query->paginate(20);
 
         return CelebrantResource::collection($celebrants);
 
