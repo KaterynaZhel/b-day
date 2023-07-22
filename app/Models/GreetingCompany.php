@@ -11,4 +11,10 @@ class GreetingCompany extends Model
     use HasFactory;
     protected $fillable = ['message_company', 'name_company', 'celebrant_id'];
 
+
+    public function celebrant()
+    {
+        return $this->belongsTo(Celebrant::class);
+    }
+
 }

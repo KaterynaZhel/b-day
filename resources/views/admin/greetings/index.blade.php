@@ -19,15 +19,18 @@
                         aria-describedby="example1_info">
                         <thead>
                             <tr>
-                                <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
-                                    colspan="1" aria-sort="ascending">id</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Ім'я
+                                <th class="sorting sorting_asc text-center" tabindex="0" aria-controls="example1"
+                                    rowspan="1" colspan="1" aria-sort="ascending">id</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1">Ім'я
                                     гостя</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Текст
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1">Текст
                                     вітання</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                    style="width: 100px;">Дата залишення вітання</th>
-                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1" style="width: 100px;">Дата залишення вітання</th>
+                                <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
+                                    colspan="1">
                                     Інструменти</th>
                             </tr>
                         </thead>
@@ -52,11 +55,11 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th rowspan="1" colspan="1">id</th>
-                                <th rowspan="1" colspan="1">Текст вітання</th>
-                                <th rowspan="1" colspan="1">Ім'я гостя</th>
-                                <th rowspan="1" colspan="1">Дата залишення вітання</th>
-                                <th rowspan="1" colspan="1"></th>
+                                <th class="text-center" rowspan="1" colspan="1">id</th>
+                                <th class="text-center" rowspan="1" colspan="1">Ім'я гостя</th>
+                                <th class="text-center" rowspan="1" colspan="1">Текст вітання</th>
+                                <th class="text-center" rowspan="1" colspan="1">Дата залишення вітання</th>
+                                <th class="text-center" rowspan="1" colspan="1">Інструменти</th>
                             </tr>
                         </tfoot>
                     </table>
