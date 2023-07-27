@@ -29,7 +29,18 @@
                                     народження</th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
                                     colspan="1">Назва
-                                    компанії</th>
+                                    компанії
+                                    <form action="{{ route('admin.mainGreetingsCompany.index') }}" method="get"
+                                        class="">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control mb-3" placeholder="пошук"
+                                                    name="q" id="searchCompany">
+                                                <span id="userList"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
                                     colspan="1">Дата
                                     публікації</th>
@@ -77,4 +88,27 @@
         </div>
     </div>
 </div>
+@endsection
+@section('custom-script')
+<script type="text/javascript">
+    var path = "{{ route('admin.mainGreetingsCompany.index') }}";
+    $("#searchCompany").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: path,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    search: request.term
+                },
+                success: function (data) {
+                    response(data);
+                }
+            });
+        },
+        select: function (event, ui) {
+            window.location.href = "{{ route('admin.mainGreetingsCompany.index') }}" + '?search=' + ui.item.label
+        }
+    });
+</script>
 @endsection
