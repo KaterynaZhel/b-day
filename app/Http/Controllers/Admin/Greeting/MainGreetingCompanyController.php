@@ -19,13 +19,13 @@ class MainGreetingCompanyController extends Controller
                 ->where('name_company', 'LIKE', '%' . $request->get('search') . '%')
                 ->get();
         }
-        $greeting = GreetingCompany::orderBy('id', 'desc');
+        $greetings = GreetingCompany::orderBy('id', 'desc');
         if ($request->filled('search')) {
-            $greeting->where('name_company', $request->get('search'));
+            $greetings->where('name_company', $request->get('search'));
         }
-        $greeting = $greeting->paginate(20);
+        $greetings = $greetings->paginate(20);
 
-        return view('admin.greetingsCompany.index', ['greetingsCompany' => $greeting]);
+        return view('admin.greetingsCompany.index', ['greetingsCompany' => $greetings]);
     }
 
 }
