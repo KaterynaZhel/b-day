@@ -7,10 +7,8 @@ use App\Http\Requests\CelebrantRequest;
 use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\GreetingCompany;
-use Database\Seeders\CelebrantSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
 {
@@ -22,8 +20,8 @@ class CelebrantController extends Controller
         $celebrants = Celebrant::query()
             ->when(
                 $request->search,
-                function (Builder $builder) use ($request) {
-                    $builder->where('firstname', 'like', "%{$request->search}%")
+                function ($query) use ($request) {
+                    $query->where('firstname', 'like', "%{$request->search}%")
                         ->orWhere('lastname', 'like', "%{$request->search}%");
                 }
             )
