@@ -40,33 +40,33 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable dtr-inline"
-                            aria-describedby="example1_info">
+                        <table id="celebrants" class="table table-bordered table-hover dataTable dtr-inline"
+                            aria-describedby="example2_info">
                             <thead>
                                 <tr>
-                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1" aria-sort="ascending">id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1">Фото
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1">
                                         Прізвище
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1">Ім'я
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1">
                                         По-батькові</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1" style="width: 100px;">
                                         Дата
                                         народження</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1">Посада
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
                                         colspan="1">
                                         Інструменти</th>
                                 </tr>
@@ -119,11 +119,6 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-7">
-                        {{ $celebrants->withQueryString()->links('admin.pagination') }}
                     </div>
                 </div>
             </div>

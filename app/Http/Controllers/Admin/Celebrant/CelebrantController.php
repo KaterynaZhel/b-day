@@ -8,7 +8,6 @@ use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\GreetingCompany;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class CelebrantController extends Controller
 {
@@ -25,7 +24,7 @@ class CelebrantController extends Controller
                         ->orWhere('lastname', 'like', "%{$request->search}%");
                 }
             )
-            ->paginate(10);
+            ->get();
         return view('admin.celebrants.index', ['celebrants' => $celebrants]);
     }
 
