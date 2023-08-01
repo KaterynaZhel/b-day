@@ -2,7 +2,16 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
+        <li class="nav-item">
+            <a href={{ route('admin.celebrants.nearestCelebrants') }} class="nav-link" style="padding-left: 0.4rem">
 
+                <i class="nav-iconn fas fa-solid fa-gift"></i>
+
+                <p style="padding-left: 0.4rem"></p>
+                Найближчі іменинники
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href={{ route('admin.celebrants.index') }} class="nav-link" style="padding-left: 0.1rem">
 
