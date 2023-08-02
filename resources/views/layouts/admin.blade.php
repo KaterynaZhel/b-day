@@ -134,9 +134,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script>
         $(function() {
             $('#celebrants').DataTable({
+                "language": {
+                    "paginate": {
+                        "next": "Наступний",
+                        "previous": "Попередній"
+                    },
+                    "search": "Пошук:",
+                },
+                "order": [
+                    [0, 'desc']
+                ],
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": false,
                 "autoWidth": false,

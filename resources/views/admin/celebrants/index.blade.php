@@ -12,7 +12,7 @@
             <h3 class="card-title">Таблиця іменинників</h3>
         </div>
         <div class="card-body">
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div id="celebrants_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row mb-3">
                     <div class="col-sm-12">
                         <a class="btn btn-primary btn-sm float-right" href="{{ route('admin.celebrants.create') }}"
@@ -20,53 +20,37 @@
                             Додати іменинника
                         </a>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <form action="{{ route('admin.celebrants.index') }}" method="get">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control float-right mb-3" name="search">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="submit" class="form-control mb-3" value="Пошук">
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="celebrants" class="table table-bordered table-hover dataTable dtr-inline"
-                            aria-describedby="example2_info">
+                            aria-describedby="celebrants_info">
                             <thead>
                                 <tr>
-                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1"
-                                        colspan="1" aria-sort="ascending">id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
+                                        colspan="1">id</th>
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">Фото
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">
                                         Прізвище
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">Ім'я
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">
                                         По-батькові</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1" style="width: 100px;">
                                         Дата
                                         народження</th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">Посада
                                     </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1"
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">
                                         Інструменти</th>
                                 </tr>
