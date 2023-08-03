@@ -33,7 +33,7 @@ class Celebrant extends Model
         if (empty($this->lastGreetingsCompany)) {
             return false;
         }
-
-        return Carbon::create($this->lastGreetingsCompany->publish_at)->gte(Carbon::now());
+        $dateNow = Carbon::now()->startOfDay();
+        return Carbon::create($this->lastGreetingsCompany->publish_at)->gte($dateNow);
     }
 }

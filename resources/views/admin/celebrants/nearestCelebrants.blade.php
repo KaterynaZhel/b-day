@@ -54,7 +54,7 @@
                                 <td>{{ $celebrant->middlename }}</td>
                                 <td>{{ $celebrant->birthday }}</td>
                                 @if(empty($celebrant->lastGreetingsCompany))
-                                <td>{{$celebrant->isHasNewGreetingCompany() ? 'true' : 'false'}}</td>
+                                <td></td>
                                 <td></td>
                                 @else
                                 <td>{{$celebrant->lastGreetingsCompany->name_company }}</td>
