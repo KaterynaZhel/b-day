@@ -34,3 +34,7 @@ Route::apiResource('greetings', App\Http\Controllers\Api\GreetingController::cla
 
 Route::get('/greetings/{celebrant_id}', [App\Http\Controllers\Api\GreetingController::class, 'index']);
 Route::get('/greetingsCompany/{celebrant_id}', [App\Http\Controllers\Api\GreetingCompanyController::class, 'show']);
+
+Route::prefix('manager')->middleware(['auth', 'isManager'])->group(function () {
+    // TODO: create routes for the manager's API
+});
