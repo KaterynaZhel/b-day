@@ -28,9 +28,11 @@ Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::c
 Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::class)->only([
     'show'
 ]);
+
 Route::apiResource('greetings', App\Http\Controllers\Api\GreetingController::class)->only([
     'store',
 ]);
 
 Route::get('/greetings/{celebrant_id}', [App\Http\Controllers\Api\GreetingController::class, 'index']);
 Route::get('/greetingsCompany/{celebrant_id}', [App\Http\Controllers\Api\GreetingCompanyController::class, 'show']);
+Route::get('/celebrants', [App\Http\Controllers\Api\CelebrantController::class, 'getUpcomingBirthdays']);

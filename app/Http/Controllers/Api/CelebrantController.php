@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
-use Carbon\Carbon;
 
 class CelebrantController extends Controller
 {
@@ -80,8 +79,6 @@ class CelebrantController extends Controller
         $celebrants = $query->paginate(20);
 
         return CelebrantResource::collection($celebrants);
-
-        // dd($celebrants);
     }
 
     /**
@@ -90,5 +87,25 @@ class CelebrantController extends Controller
     public function show(string $id)
     {
         return new CelebrantResource(Celebrant::findOrFail($id));
+    }
+
+    /**
+     * Display the nearest 10 Celebrants.
+     */
+
+    public function getUpcomingBirthdays()
+    {
+        $date = now();
+        $celebrants = Celebrant::whereMonth('birthday', '>', $date->month)
+            ->orWhere(function ($query) use ($date) {
+                $query->whereMonth('birthday', '=', $date->month)
+                    ->whereDay('birthday', '>=', $date->day);
+            })
+            ->orderByRaw("MONTH(birthday) ASC")
+            ->orderByRaw("DAYOFMONTH(birthday) ASC")
+            ->take(10)
+            ->get();
+
+        return CelebrantResource::collection($celebrants);
     }
 }
