@@ -8,24 +8,15 @@ use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\GreetingCompany;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class CelebrantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $celebrants = Celebrant::query()
-            ->when(
-                $request->search,
-                function ($query) use ($request) {
-                    $query->where('firstname', 'like', "%{$request->search}%")
-                        ->orWhere('lastname', 'like', "%{$request->search}%");
-                }
-            )
-            ->paginate(10);
+        $celebrants = Celebrant::orderBy('id', 'desc')->get();
         return view('admin.celebrants.index', ['celebrants' => $celebrants]);
     }
 

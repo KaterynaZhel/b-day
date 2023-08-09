@@ -72,9 +72,9 @@ class CelebrantController extends Controller
             $query->whereDay('birthday', '>=', $dayFrom);
         }
 
-        if ($request->filled('daytTo')) {
-            $daytTo = $request->get('daytTo');
-            $query->whereDay('birthday', '<=', $daytTo);
+        if ($request->filled('dayTo')) {
+            $dayTo = $request->get('dayTo');
+            $query->whereDay('birthday', '<=', $dayTo);
         }
 
         $celebrants = $query->paginate(20);
