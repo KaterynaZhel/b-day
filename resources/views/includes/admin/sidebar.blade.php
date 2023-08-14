@@ -16,7 +16,7 @@
         <li class="nav-item">
             <a href={{ route('admin.users.index') }} class="nav-link" style="padding-left: 0.1rem">
                 <i class="nav-icon fas fa-unlock"></i>
-                Адміністратори
+                Менеджери
                 </p>
             </a>
         </li>
