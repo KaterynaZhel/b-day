@@ -37,4 +37,3 @@ Route::get('/greetingsCompany/{celebrant_id}', [App\Http\Controllers\Api\Greetin
 Route::prefix('manager')->middleware(['auth', 'isManager'])->group(function () {
     // TODO: create routes for the manager's API
 });
-// Route::get('/celebrants', [App\Http\Controllers\Api\CelebrantController::class, 'getUpcomingBirthdays']);
