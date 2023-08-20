@@ -53,8 +53,8 @@
                             @foreach ($greetingsCompany as $greeting)
                             <tr class="odd">
                                 <td class="dtr-control sorting_1" tabindex="0">{{ $greeting->celebrant_id }}</td>
-                                <td>{{ $greeting->celebrant->lastname }}&nbsp{{$greeting->celebrant->firstname }}</td>
-                                <td>{{ $greeting->celebrant->birthday }}</td>
+                                <td>{{ $greeting->celebrant->lastname ?? 'None' }}&nbsp{{$greeting->celebrant->firstname ?? 'None' }}</td>
+                                <td>{{ $greeting->celebrant->birthday ?? 'None' }}</td>
                                 <td>{{ $greeting->name_company }}</td>
                                 <td>{{ $greeting->publish_at }}</td>
                                 <td class="project-actions d-flex justify-content-center">

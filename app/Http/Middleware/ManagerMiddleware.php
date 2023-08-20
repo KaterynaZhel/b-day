@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class ManagerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,12 +16,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // admin role == 1
-        // user role == 0
-        // manager role == 2
-
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            return redirect('/login')->with('message', 'Access denied because you are not an Admin');
+        if (!Auth::check() || !Auth::user()->isManager()) {
+            // TODO: change redirect to login for Manager
+            return redirect('/login')->with('message', 'Access denied because you are not a Manager');
         }
         return $next($request);
     }

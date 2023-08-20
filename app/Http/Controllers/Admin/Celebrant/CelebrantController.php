@@ -7,27 +7,17 @@ use App\Http\Requests\CelebrantRequest;
 use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\GreetingCompany;
-use Illuminate\Http\Request;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $celebrants = Celebrant::query()
-            ->when(
-                $request->search,
-                function ($query) use ($request) {
-                    $query->where('firstname', 'like', "%{$request->search}%")
-                        ->orWhere('lastname', 'like', "%{$request->search}%");
-                }
-            )
-            ->paginate(10);
+        $celebrants = Celebrant::orderBy('id', 'desc')->get();
         return view('admin.celebrants.index', ['celebrants' => $celebrants]);
     }
 
@@ -102,8 +92,7 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= 7; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        }
-        ;
+        };
 
         $celebrants = Celebrant::orderBy('id', 'desc')
             ->whereIn(
@@ -113,7 +102,5 @@ class CelebrantController extends Controller
             ->paginate(20);
 
         return view('admin.celebrants.nearestCelebrants', ['celebrants' => $celebrants]);
-
-
     }
 }

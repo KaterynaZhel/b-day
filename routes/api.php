@@ -3,8 +3,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Celebrant;
-use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +26,14 @@ Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::c
 Route::apiResource('celebrants', App\Http\Controllers\Api\CelebrantController::class)->only([
     'show'
 ]);
+
 Route::apiResource('greetings', App\Http\Controllers\Api\GreetingController::class)->only([
     'store',
 ]);
 
 Route::get('/greetings/{celebrant_id}', [App\Http\Controllers\Api\GreetingController::class, 'index']);
 Route::get('/greetingsCompany/{celebrant_id}', [App\Http\Controllers\Api\GreetingCompanyController::class, 'show']);
+
+Route::prefix('manager')->middleware(['auth', 'isManager'])->group(function () {
+    // TODO: create routes for the manager's API
+});
