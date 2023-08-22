@@ -74,11 +74,13 @@ class GreetingCompanyController extends Controller
      * @param int $celebrant_id
      * @return mixed
      */
+
     public static function GreetingDate(int $celebrant_id)
     {
         $birthday            = Celebrant::where('id', $celebrant_id)->value('birthday');
         $birthdayCurrentYear = Carbon::create($birthday)->year(now()->format('Y'))->format('Y-m-d');
-        if (Carbon::create($birthdayCurrentYear)->gt(Carbon::now())) {
+        $dateNow             = Carbon::now()->startOfDay();
+        if (Carbon::create($birthdayCurrentYear)->gte($dateNow)) {
             return $birthdayCurrentYear;
         } else {
 

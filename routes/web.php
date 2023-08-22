@@ -35,4 +35,5 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     ], [
         'as' => 'admin'
     ]);
+    Route::get('/nearestCelebrants', [App\Http\Controllers\Admin\Celebrant\CelebrantController::class, 'nearestCelebrants'])->name('admin.celebrants.nearestCelebrants');
 });

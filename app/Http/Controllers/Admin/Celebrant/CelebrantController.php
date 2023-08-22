@@ -7,7 +7,8 @@ use App\Http\Requests\CelebrantRequest;
 use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\GreetingCompany;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
 {
@@ -51,7 +52,7 @@ class CelebrantController extends Controller
      */
     public function show(string $id)
     {
-        $celebrant = Celebrant::find($id);
+        $celebrant        = Celebrant::find($id);
         $greetingsCompany = GreetingCompany::all()->where('celebrant_id', "==", $id);
         return view('admin.celebrants.show', compact('celebrant', 'greetingsCompany'));
     }
@@ -83,5 +84,23 @@ class CelebrantController extends Controller
     {
         Celebrant::find($id)->delete();
         return redirect('admin/celebrants')->withSuccess('Іменинник успішно видалений з бази даних Компанії');
+    }
+
+    public function nearestCelebrants()
+    {
+        $next_week    = [];
+        $current_date = Carbon::now();
+        for ($i = 0; $i <= 7; $i++) {
+            $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
+        };
+
+        $celebrants = Celebrant::orderBy('id', 'desc')
+            ->whereIn(
+                DB::raw("DATE_FORMAT(birthday,'%m-%d')"),
+                $next_week
+            )
+            ->paginate(20);
+
+        return view('admin.celebrants.nearestCelebrants', ['celebrants' => $celebrants]);
     }
 }
