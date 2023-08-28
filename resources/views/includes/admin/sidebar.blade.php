@@ -30,6 +30,13 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href={{ route('admin.companies.index') }} class="nav-link" style="padding-left: 0.1rem">
+                <i class="nav-icon far fa-building"></i>
+                Компанії
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href={{ route('admin.greetings.index') }} class="nav-link" style="padding-left: 0.1rem">
 
                 <i class="nav-icon far fa-comments"></i>
