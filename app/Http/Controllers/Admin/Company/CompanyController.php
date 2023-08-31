@@ -46,7 +46,8 @@ class CompanyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $company = Company::find($id);
+        return view('admin.companies.edit', ['company' => $company]);
     }
 
     /**
@@ -54,7 +55,13 @@ class CompanyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:2|max:255',
+            'site' => 'nullable|url|max:255',
+        ]);
+        $company = Company::find($id);
+        $company->update($request->all());
+        return redirect('admin/companies')->withSuccess('Компанія була успішно оновлена');
     }
 
     /**
