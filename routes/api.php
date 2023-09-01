@@ -37,3 +37,7 @@ Route::get('/greetingsCompany/{celebrant_id}', [App\Http\Controllers\Api\Greetin
 Route::prefix('manager')->middleware(['auth', 'isManager'])->group(function () {
     // TODO: create routes for the manager's API
 });
+
+Route::prefix('manager')->group(function () {
+    Route::post('/register', [App\Http\Controllers\ApiManager\RegisterController::class, 'register'])->name('manager.register');
+});
