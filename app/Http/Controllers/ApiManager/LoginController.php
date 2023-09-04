@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiManager;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginManagerRequest;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -13,7 +14,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(LoginManagerRequest $request)
     {
         $credentials = request(['email', 'password']);
 
