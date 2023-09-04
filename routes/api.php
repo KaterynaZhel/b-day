@@ -37,10 +37,10 @@ Route::get('/greetingsCompany/{celebrant_id}', [App\Http\Controllers\Api\Greetin
 Route::prefix('manager')->group(function () {
     Route::post('/register', [App\Http\Controllers\ApiManager\RegisterController::class, 'register'])->name('manager.register');
     Route::post('/login', [App\Http\Controllers\ApiManager\LoginController::class, 'login'])->name('manager.login');
+    Route::post('/refresh', [App\Http\Controllers\ApiManager\LoginController::class, 'refresh'])->name('manager.refresh');
 });
 
 Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function () {
     Route::post('/logout', [App\Http\Controllers\ApiManager\LoginController::class, 'logout'])->name('manager.logout');
-    Route::post('/refresh', [App\Http\Controllers\ApiManager\LoginController::class, 'refresh'])->name('manager.refresh');
     Route::post('/me', [App\Http\Controllers\ApiManager\LoginController::class, 'me'])->name('manager.me');
 });
