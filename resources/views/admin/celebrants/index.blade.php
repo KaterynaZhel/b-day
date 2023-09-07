@@ -48,7 +48,10 @@
                                         Дата
                                         народження</th>
                                     <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
-                                        colspan="1">Посада
+                                        colspan="1">
+                                        Назва компанії</th>
+                                    <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
+                                        colspan="1">Роль
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">
@@ -64,6 +67,7 @@
                                         <td>{{ $celebrant->firstname }}</td>
                                         <td>{{ $celebrant->middlename }}</td>
                                         <td>{{ $celebrant->birthday }}</td>
+                                        <td>{{ $celebrant->company->name ?? 'Не визначено' }}</td>
                                         <td>{{ $celebrant->position }}</td>
                                         <td class="project-actions d-flex justify-content-center">
                                             <a class="btn btn-primary btn-sm"
@@ -98,6 +102,7 @@
                                     <th rowspan="1" colspan="1">Ім'я</th>
                                     <th rowspan="1" colspan="1">По-батькові</th>
                                     <th rowspan="1" colspan="1">Дата народження</th>
+                                    <th rowspan="1" colspan="1">Назва компанії</th>
                                     <th rowspan="1" colspan="1">Роль</th>
                                     <th rowspan="1" colspan="1">Інструменти</th>
                                 </tr>
