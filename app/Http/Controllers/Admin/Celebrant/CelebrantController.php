@@ -18,9 +18,8 @@ class CelebrantController extends Controller
      */
     public function index()
     {
-        $celebrants = Celebrant::orderBy('id', 'desc')->with('company')->get();
-        $companies = Company::with('celebrants')->get();
-        return view('admin.celebrants.index', compact('celebrants', 'companies'));
+        $celebrants = Celebrant::orderBy('id', 'desc')->get();
+        return view('admin.celebrants.index', ['celebrants' => $celebrants]);
     }
 
     /**
