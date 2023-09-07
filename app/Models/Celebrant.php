@@ -7,11 +7,12 @@ use App\Casts\CelebrantPosition;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Company;
 
 class Celebrant extends Model
 {
     use HasFactory;
-    protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'position'];
+    protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position'];
 
     protected $casts = [
         'position' => CelebrantPosition::class,
@@ -35,5 +36,10 @@ class Celebrant extends Model
         }
         $dateNow = Carbon::now()->startOfDay();
         return Carbon::create($this->lastGreetingsCompany->publish_at)->gte($dateNow);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Casts\CelebrantPosition;
 use App\Http\Requests\CelebrantRequest;
 use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\GreetingCompany;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,9 @@ class CelebrantController extends Controller
      */
     public function index()
     {
-        $celebrants = Celebrant::orderBy('id', 'desc')->get();
-        return view('admin.celebrants.index', ['celebrants' => $celebrants]);
+        $celebrants = Celebrant::orderBy('id', 'desc')->with('company')->get();
+        $companies = Company::with('celebrants')->get();
+        return view('admin.celebrants.index', compact('celebrants', 'companies'));
     }
 
     /**
