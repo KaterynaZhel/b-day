@@ -6,7 +6,6 @@ use App\Casts\CelebrantPosition;
 use App\Http\Requests\CelebrantRequest;
 use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
-use App\Models\Company;
 use App\Models\GreetingCompany;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
