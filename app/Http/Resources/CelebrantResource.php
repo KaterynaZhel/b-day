@@ -23,6 +23,7 @@ class CelebrantResource extends JsonResource
             'firstname' => $this->firstname,
             'middlename' => $this->maidlename,
             'birthday' => $this->birthday,
+            'company_id' => $this->company_id,
             'position' => $this->position,
         ];
     }

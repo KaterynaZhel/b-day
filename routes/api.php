@@ -40,4 +40,5 @@ Route::prefix('manager')->middleware(['auth', 'isManager'])->group(function () {
 
 Route::prefix('manager')->group(function () {
     Route::post('/register', [App\Http\Controllers\ApiManager\RegisterController::class, 'register'])->name('manager.register');
+    Route::get('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'index'])->name('manager.index');
 });
