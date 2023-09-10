@@ -15,11 +15,8 @@ class CelebrantController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $userCompany = Auth::user()->company_id;
-            $celebrants = Celebrant::where('company_id', '=', $userCompany)->paginate(20);
-            return CelebrantResource::collection($celebrants);
-        }
+        $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->paginate(20);
+        return CelebrantResource::collection($celebrants);
     }
 
     /**
