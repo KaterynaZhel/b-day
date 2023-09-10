@@ -6,21 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CelebrantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $query = Celebrant::query();
-        if ($request->filled('company_id')) {
-            $company_id = $request->get('company_id');
-            $query->where('company_id', 'like', "%$company_id%");
+        if (Auth::check()) {
+            $userCompany = Auth::user()->company_id;
+            $celebrants = Celebrant::where('company_id', '=', $userCompany)->paginate(20);
+            return CelebrantResource::collection($celebrants);
         }
-        $celebrants = $query->paginate(20);
-        return CelebrantResource::collection($celebrants);
     }
 
     /**

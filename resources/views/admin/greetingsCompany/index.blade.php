@@ -28,8 +28,7 @@
                                     colspan="1">Дата
                                     народження</th>
                                 <th class="sorting text-center" tabindex="0" aria-controls="example1" rowspan="1"
-                                    colspan="1">Назва
-                                    компанії
+                                    colspan="1">Компанія
                                     <form action="{{ route('admin.mainGreetingsCompany.index') }}" method="get"
                                         class="">
                                         <div class="row d-flex justify-content-center">
@@ -72,7 +71,7 @@
                                 <th class="text-center" rowspan="1" colspan="1">id іменинника</th>
                                 <th class="text-center" rowspan="1" colspan="1">Прізвище та ім'я іменинника</th>
                                 <th class="text-center" rowspan="1" colspan="1">Дата народження</th>
-                                <th class="text-center" rowspan="1" colspan="1">Назва компанії</th>
+                                <th class="text-center" rowspan="1" colspan="1">Компанія</th>
                                 <th class="text-center" rowspan="1" colspan="1">Дата публікації</th>
                                 <th class="text-center" rowspan="1" colspan="1">Профіль іменинника</th>
                             </tr>

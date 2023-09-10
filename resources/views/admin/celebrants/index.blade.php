@@ -49,7 +49,7 @@
                                         народження</th>
                                     <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">
-                                        Назва компанії</th>
+                                        Компанія</th>
                                     <th class="sorting" tabindex="0" aria-controls="celebrants" rowspan="1"
                                         colspan="1">Роль
                                     </th>
@@ -102,7 +102,7 @@
                                     <th rowspan="1" colspan="1">Ім'я</th>
                                     <th rowspan="1" colspan="1">По-батькові</th>
                                     <th rowspan="1" colspan="1">Дата народження</th>
-                                    <th rowspan="1" colspan="1">Назва компанії</th>
+                                    <th rowspan="1" colspan="1">Компанія</th>
                                     <th rowspan="1" colspan="1">Роль</th>
                                     <th rowspan="1" colspan="1">Інструменти</th>
                                 </tr>
