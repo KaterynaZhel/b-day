@@ -5,8 +5,10 @@ namespace App\Http\Controllers\ApiManager;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
 {
@@ -65,5 +67,24 @@ class CelebrantController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function nearestCelebrants()
+    {
+        $next_week    = [];
+        $current_date = Carbon::now();
+        for ($i = 0; $i <= 7; $i++) {
+            $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
+        }
+        ;
+
+        $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
+            ->whereIn(
+                DB::raw("DATE_FORMAT(birthday,'%m-%d')"),
+                $next_week
+            )
+            ->paginate(20);
+
+        return CelebrantResource::collection($celebrants);
     }
 }

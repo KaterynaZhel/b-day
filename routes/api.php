@@ -44,4 +44,6 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::post('/logout', [App\Http\Controllers\ApiManager\LoginController::class, 'logout'])->name('manager.logout');
     Route::post('/me', [App\Http\Controllers\ApiManager\LoginController::class, 'me'])->name('manager.me');
     Route::get('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'index'])->name('manager.index');
+    Route::get('/nearestCelebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'nearestCelebrants'])
+        ->name('manager.nearestCelebrants');
 });
