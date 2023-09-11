@@ -43,4 +43,5 @@ Route::prefix('manager')->group(function () {
 Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function () {
     Route::post('/logout', [App\Http\Controllers\ApiManager\LoginController::class, 'logout'])->name('manager.logout');
     Route::post('/me', [App\Http\Controllers\ApiManager\LoginController::class, 'me'])->name('manager.me');
+    Route::get('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'index'])->name('manager.index');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Storage;
@@ -23,6 +24,7 @@ class CelebrantResource extends JsonResource
             'firstname' => $this->firstname,
             'middlename' => $this->maidlename,
             'birthday' => $this->birthday,
+            'company' => new CompanyResource($this->company),
             'position' => $this->position,
         ];
     }
