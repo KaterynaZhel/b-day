@@ -66,7 +66,13 @@ class CelebrantController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $count = Celebrant::where('company_id', '=', Auth::user()->company_id)->where('id', $id)->delete();
+        if ($count > 0) {
+            return response()->json(['message' => 'Successfully Deleted']);
+        } else {
+            return response()->json(['message' => 'Delete Failed'])->setStatusCode(403);
+        }
+
     }
 
     public function nearestCelebrants()
