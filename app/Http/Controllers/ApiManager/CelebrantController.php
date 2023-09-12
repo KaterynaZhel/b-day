@@ -37,8 +37,7 @@ class CelebrantController extends Controller
     public function show(string $id)
     {
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
-        // return new CelebrantResource($celebrant);
-        return $this->sendResponse(new CelebrantResource($celebrant), 'Product created successfully.');
+        return new CelebrantResource($celebrant);
     }
 
     /**
