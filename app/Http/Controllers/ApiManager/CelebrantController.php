@@ -7,6 +7,7 @@ use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CelebrantRequest;
 
 class CelebrantController extends Controller
 {
@@ -20,19 +21,14 @@ class CelebrantController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CelebrantRequest $request)
     {
-        //
+        $celebrant = Celebrant::create($request->validated());
+        $celebrant->company_id = Auth::user()->company_id;
+        $celebrant->save();
+        return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 
     /**
@@ -41,7 +37,8 @@ class CelebrantController extends Controller
     public function show(string $id)
     {
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
-        return new CelebrantResource($celebrant);
+        // return new CelebrantResource($celebrant);
+        return $this->sendResponse(new CelebrantResource($celebrant), 'Product created successfully.');
     }
 
     /**
