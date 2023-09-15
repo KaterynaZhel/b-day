@@ -7,6 +7,7 @@ use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CelebrantRequest;
 
 class CelebrantController extends Controller
 {
@@ -20,19 +21,17 @@ class CelebrantController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CelebrantRequest $request)
     {
-        //
+        $celebrant = Celebrant::create($request->validated());
+        $imageName = time() . '.' . $request->photo->extension();
+        $celebrant->photo = $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
+        $celebrant->photo = $imageName;
+        $celebrant->company_id = Auth::user()->company_id;
+        $celebrant->save();
+        return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 
     /**
