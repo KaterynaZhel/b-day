@@ -15,11 +15,21 @@ class CelebrantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->paginate(20);
-        return CelebrantResource::collection($celebrants);
+        $validated = $request->validate([
+            'number_days' => 'nullable|numeric',
+        ]);
+
+        if ($request->filled('number_days')) {
+            $number_days = $request->input('number_days');
+            return $this->nearestCelebrants($number_days);
+        } else {
+            $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->paginate(20);
+            return CelebrantResource::collection($celebrants);
+        }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,8 +76,8 @@ class CelebrantController extends Controller
      */
     public function destroy(string $id)
     {
-        $count = Celebrant::where('company_id', '=', Auth::user()->company_id)->where('id', $id)->delete();
-        if ($count > 0) {
+        $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
+        if ($celebrant->delete()) {
             return response()->json(['message' => 'Successfully Deleted']);
         } else {
             return response()->json(['message' => 'Delete Failed'])->setStatusCode(403);
@@ -75,11 +85,11 @@ class CelebrantController extends Controller
 
     }
 
-    public function nearestCelebrants()
+    public function nearestCelebrants(int $number_days)
     {
         $next_week    = [];
         $current_date = Carbon::now();
-        for ($i = 0; $i <= 7; $i++) {
+        for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
         }
         ;

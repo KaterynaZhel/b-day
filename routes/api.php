@@ -46,6 +46,4 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::get('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'index'])->name('manager.index');
 
     Route::delete('/celebrants/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'destroy'])->name('manager.destroy');
-    Route::get('/nearestCelebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'nearestCelebrants'])
-        ->name('manager.nearestCelebrants');
 });
