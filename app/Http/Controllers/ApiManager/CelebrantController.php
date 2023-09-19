@@ -38,9 +38,15 @@ class CelebrantController extends Controller
     public function store(CelebrantRequest $request)
     {
         $celebrant             = Celebrant::create($request->validated());
-        $imageName             = time() . '.' . $request->photo->extension();
-        $celebrant->photo      = $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
-        $celebrant->photo      = $imageName;
+        if ($request->photo) {
+            $imageName = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
+            $path = "ManagerPhotos/CelebrantPhoto/$imageName";
+            $celebrant->photo = $path;
+        } else {
+            $path = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $path;
+        }
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
