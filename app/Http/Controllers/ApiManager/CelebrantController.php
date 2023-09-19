@@ -56,19 +56,23 @@ class CelebrantController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
+
+        if ($request->photo) {
+            $imageName = time() . '.' . $request->photo->extension();
+            $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
+            $path = "ManagerPhotos/CelebrantPhoto/$imageName";
+            $celebrant->photo = $path;
+        } else {
+            $path = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $path;
+        }
+        $celebrant->update($request->all());
+        return new CelebrantResource($celebrant);
     }
 
     /**
@@ -82,7 +86,6 @@ class CelebrantController extends Controller
         } else {
             return response()->json(['message' => 'Delete Failed'])->setStatusCode(403);
         }
-
     }
 
     public function nearestCelebrants(int $number_days)
@@ -91,8 +94,7 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        }
-        ;
+        };
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
