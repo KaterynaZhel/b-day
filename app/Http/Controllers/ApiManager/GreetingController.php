@@ -7,7 +7,6 @@ use App\Http\Resources\GreetingResource;
 use App\Models\Greeting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class GreetingController extends Controller
 {
