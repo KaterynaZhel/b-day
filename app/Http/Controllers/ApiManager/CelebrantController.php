@@ -40,8 +40,8 @@ class CelebrantController extends Controller
         $celebrant             = Celebrant::create($request->validated());
         if ($request->photo) {
             $imageName = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
-            $path = "ManagerPhotos/CelebrantPhoto/$imageName";
+            $request->photo->move(public_path('storage/ManagerPhotos/CelebrantPhotos'), $imageName);
+            $path = "storage/ManagerPhotos/CelebrantPhotos/$imageName";
             $celebrant->photo = $path;
         } else {
             $path = "adminlte/dist/img/smile.png";
@@ -64,14 +64,14 @@ class CelebrantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CelebrantRequest $request, string $id)
     {
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
-
+        
         if ($request->photo) {
             $imageName = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
-            $path = "ManagerPhotos/CelebrantPhoto/$imageName";
+            $request->photo->move(public_path('storage/ManagerPhotos/CelebrantPhotos'), $imageName);
+            $path = "storage/ManagerPhotos/CelebrantPhotos/$imageName";
             $celebrant->photo = $path;
         } else {
             $path = "adminlte/dist/img/smile.png";
