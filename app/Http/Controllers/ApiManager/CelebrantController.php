@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CelebrantRequest;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
@@ -31,21 +32,19 @@ class CelebrantController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request)
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService,)
     {
         $celebrant             = Celebrant::create($request->validated());
-        if ($request->photo) {
-            $imageName = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('storage/ManagerPhotos/CelebrantPhotos'), $imageName);
-            $path = "storage/ManagerPhotos/CelebrantPhotos/$imageName";
-            $celebrant->photo = $path;
+        if ($request->hasFile('photoFile')) {
+            $file = $request->file('photoFile');
+            $filePath = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
         } else {
-            $path = "adminlte/dist/img/smile.png";
-            $celebrant->photo = $path;
+            $filePath = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
         }
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
@@ -64,18 +63,17 @@ class CelebrantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CelebrantRequest $request, string $id)
+    public function update(CelebrantRequest $request, FileUploadService $fileUploadService, string $id)
     {
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
-        
-        if ($request->photo) {
-            $imageName = time() . '.' . $request->photo->extension();
-            $request->photo->move(public_path('storage/ManagerPhotos/CelebrantPhotos'), $imageName);
-            $path = "storage/ManagerPhotos/CelebrantPhotos/$imageName";
-            $celebrant->photo = $path;
+
+        if ($request->hasFile('photoFile')) {
+            $file = $request->file('photoFile');
+            $filePath = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
         } else {
-            $path = "adminlte/dist/img/smile.png";
-            $celebrant->photo = $path;
+            $filePath = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
         }
         $celebrant->update($request->all());
         return new CelebrantResource($celebrant);
