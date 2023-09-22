@@ -31,6 +31,15 @@ class GreetingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $greetings = Greeting::select('greetings.*')
+            ->where('company_id', '=', Auth::user()->company_id)
+            ->leftjoin('celebrants', 'greetings.celebrant_id', '=', 'celebrants.id')
+            ->findOrFail($id);
+
+        if ($greetings->delete()) {
+            return response()->json(['message' => 'Successfully Deleted']);
+        } else {
+            return response()->json(['message' => 'Delete Failed'])->setStatusCode(403);
+        }
     }
 }
