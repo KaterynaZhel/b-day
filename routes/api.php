@@ -48,4 +48,6 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::post('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'store'])->name('manager.store');
     Route::post('/celebrant/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'update'])->name('manager.update');
     Route::delete('/celebrants/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'destroy'])->name('manager.destroy');
+    Route::get('/greetings', [App\Http\Controllers\ApiManager\GreetingController::class, 'index'])->name('manager.greetings.index');
+    Route::delete('/greetings/{id}', [App\Http\Controllers\ApiManager\GreetingController::class, 'destroy'])->name('manager.destroy');
 });
