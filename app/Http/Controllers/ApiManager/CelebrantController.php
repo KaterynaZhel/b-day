@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CelebrantRequest;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
@@ -31,16 +32,20 @@ class CelebrantController extends Controller
         }
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request)
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService,)
     {
         $celebrant             = Celebrant::create($request->validated());
-        $imageName             = time() . '.' . $request->photo->extension();
-        $celebrant->photo      = $request->photo->move(public_path('ManagerPhotos/CelebrantPhoto'), $imageName);
-        $celebrant->photo      = $imageName;
+        if ($request->hasFile('photoFile')) {
+            $file = $request->file('photoFile');
+            $filePath = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
+        } else {
+            $filePath = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
+        }
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
@@ -56,19 +61,22 @@ class CelebrantController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CelebrantRequest $request, FileUploadService $fileUploadService, string $id)
     {
-        //
+        $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
+
+        if ($request->hasFile('photoFile')) {
+            $file = $request->file('photoFile');
+            $filePath = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
+        } else {
+            $filePath = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
+        }
+        $celebrant->update($request->all());
+        return new CelebrantResource($celebrant);
     }
 
     /**
@@ -82,7 +90,6 @@ class CelebrantController extends Controller
         } else {
             return response()->json(['message' => 'Delete Failed'])->setStatusCode(403);
         }
-
     }
 
     public function nearestCelebrants(int $number_days)
@@ -91,8 +98,7 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        }
-        ;
+        };
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
