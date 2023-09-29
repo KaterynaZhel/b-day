@@ -59,7 +59,19 @@
                     </div>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label for="company">Компанія</label>
+                <select id="company" name="company_id" class="form-control select2bs4" style="width: 100%;">
+                    <option></option>
+                    @foreach($companies as $company)
+                    @if($celebrant->company_id == $company->id)
+                    <option value="{{ $company->id }}" selected>{{ $company->name }}</option>
+                    @else
+                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                    @endif
+                    @endforeach
+                </select>
+            </div>
             <div class="form-group">
                 <label for="position">Роль</label>
                 <select id="position" name="position" class="form-control custom-select">
@@ -72,6 +84,7 @@
                     @endif
                     @endforeach
                 </select>
+
             </div>
 
             <div class="card-footer">
@@ -79,4 +92,20 @@
             </div>
     </form>
 </div>
+@endsection
+
+@section('custom-script')
+
+<script>
+    $(document).ready(function () {
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        //select2 autofocus
+        $(document).on('select2:open', () => {
+            document.querySelector('.select2-search__field').focus();
+        });
+    });
+</script>
 @endsection

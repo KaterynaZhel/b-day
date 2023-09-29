@@ -15,6 +15,9 @@
                 <b>Дата народження</b> <a class="float-right">{{$celebrant->birthday}}</a>
             </li>
             <li class="list-group-item">
+                <b>Компанія</b> <a class="float-right">{{$celebrant->company->name ?? 'Не визначено'}}</a>
+            </li>
+            <li class="list-group-item">
                 <b>Роль</b> <a class="float-right">{{$celebrant->position}}</a>
             </li>
 
