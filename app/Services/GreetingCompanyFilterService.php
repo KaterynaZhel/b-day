@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ManagerResources\GreetingCompanyResource;
 
-class FilterService
+class GreetingCompanyFilterService
 {
     /**
      * Filter for the nearest celebrants.
