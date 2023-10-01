@@ -58,7 +58,15 @@
                 </div>
             </div>
 
-
+            <div class="form-group">
+                <label>Компанія</label>
+                <select id="company" name="company_id" class="form-control select2bs4" style="width: 100%;">
+                    <option></option>
+                    @foreach($companies as $company)
+                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="form-group">
                 <label for="position">Роль</label>
@@ -96,6 +104,15 @@
             locale: {
                 format: 'YYYY-MM-DD'
             }
+        });
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        //select2 autofocus
+        $(document).on('select2:open', () => {
+            document.querySelector('.select2-search__field').focus();
         });
     });
 </script>

@@ -28,6 +28,7 @@ class CelebrantRequest extends FormRequest
             'firstname' => 'required|max:100|min:2|regex:/^[а-яґїієa-z\-\'\s]+$/ui',
             'middlename' => 'nullable|max:100|min:2|regex:/^[а-яґїієa-z\-\'\s]+$/ui',
             'birthday' => 'required|date_format:Y-m-d',
+            'company' => ['numeric', 'company_id' => 'exists:companies,id'],
             'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
             'photoFile' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];
