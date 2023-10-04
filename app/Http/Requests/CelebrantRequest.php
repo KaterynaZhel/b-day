@@ -29,6 +29,8 @@ class CelebrantRequest extends FormRequest
             'middlename' => 'nullable|max:100|min:2|regex:/^[а-яґїієa-z\-\'\s]+$/ui',
             'birthday' => 'required|date_format:Y-m-d',
             'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
+            'hobbies' => 'array',
+            'hobbies.*' => 'numeric|exists:hobbies,id',
             'photoFile' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];
     }

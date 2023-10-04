@@ -35,19 +35,20 @@ class CelebrantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request, FileUploadService $fileUploadService,)
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, )
     {
-        $celebrant             = Celebrant::create($request->validated());
+        $celebrant = Celebrant::create($request->validated());
         if ($request->hasFile('photoFile')) {
-            $file = $request->file('photoFile');
-            $filePath = $fileUploadService->uploadFile($file);
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file);
             $celebrant->photo = $filePath;
         } else {
-            $filePath = "adminlte/dist/img/smile.png";
+            $filePath         = "adminlte/dist/img/smile.png";
             $celebrant->photo = $filePath;
         }
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
+        $celebrant->hobbies()->attach(array_unique($request->hobbies));
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 
@@ -68,11 +69,11 @@ class CelebrantController extends Controller
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
 
         if ($request->hasFile('photoFile')) {
-            $file = $request->file('photoFile');
-            $filePath = $fileUploadService->uploadFile($file);
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file);
             $celebrant->photo = $filePath;
         } else {
-            $filePath = "adminlte/dist/img/smile.png";
+            $filePath         = "adminlte/dist/img/smile.png";
             $celebrant->photo = $filePath;
         }
         $celebrant->update($request->all());
@@ -98,7 +99,8 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        };
+        }
+        ;
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
