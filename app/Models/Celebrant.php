@@ -42,4 +42,10 @@ class Celebrant extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function hobbies()
+    {
+        return $this->belongsToMany(Hobby::class, 'hobby_celebrant', 'celebrant_id', 'hobby_id');
+    }
+
 }

@@ -30,6 +30,8 @@ class CelebrantRequest extends FormRequest
             'birthday' => 'required|date_format:Y-m-d',
             'company' => ['numeric', 'company_id' => 'exists:companies,id'],
             'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
+            'hobbies' => 'array',
+            'hobbies.*' => 'numeric|exists:hobbies,id',
             'photoFile' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];
     }
