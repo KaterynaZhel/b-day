@@ -30,7 +30,7 @@ class CelebrantRequest extends FormRequest
             'birthday' => 'required|date_format:Y-m-d',
             'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
             'hobbies' => 'array',
-            'hobbies.*' => 'numeric|exists:hobbies,id',
+            'hobbies.*' => 'string',
             'photoFile' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];
     }

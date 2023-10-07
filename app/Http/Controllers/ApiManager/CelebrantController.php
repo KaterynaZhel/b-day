@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiManager;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
+use App\Models\Hobby;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,27 @@ class CelebrantController extends Controller
         }
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
-        $celebrant->hobbies()->attach(array_unique($request->hobbies));
+
+        $hobby_names = array_unique($request->hobbies);
+
+        $hobby_existed = Hobby::whereIn('name', $hobby_names)
+            ->select('name')
+            ->pluck('name')->toArray();
+
+        $new_hobby_names = array_diff($hobby_names, $hobby_existed);
+
+        foreach ($new_hobby_names as $name) {
+            $newHobby       = new Hobby();
+            $newHobby->name = $name;
+            $newHobby->save();
+        }
+
+        $hobby_ids = Hobby::whereIn('name', $hobby_names)
+            ->select('id')
+            ->pluck('id')->toArray();
+
+        $celebrant->hobbies()->attach($hobby_ids);
+
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 

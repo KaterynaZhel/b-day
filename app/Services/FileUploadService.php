@@ -15,8 +15,8 @@ class FileUploadService
 
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $filesystem = Storage::disk('public');
-        $filesystem->putFileAs('/celebrantPhotos', $file, $fileName);
+        $filesystem->putFileAs('/CelebrantPhoto', $file, $fileName);
 
-        return 'celebrantPhotos/' . $fileName;
+        return 'CelebrantPhoto/' . $fileName;
     }
 }
