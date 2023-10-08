@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Prompts\PromptTemplate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ChatGPTController extends Controller
 {
@@ -32,16 +33,22 @@ class ChatGPTController extends Controller
 
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
 
+        $hobbiesArray = DB::table('hobby_celebrant')
+            ->where('celebrant_id', '=', $celebrant->id)
+            ->join('hobbies', 'hobbies.id', '=', 'hobby_celebrant.hobby_id')
+            ->pluck('name');
+        $hobbiesString = collect($hobbiesArray)->implode(',');
+
         $prompt = PromptTemplate::create(template: 'Які ідеї подарунків для співробітника по імені {firstname}, який народився {date}, 
-        та працює в компанії {company} на посаді {position}. Має такі інтереси як велосипед, хокей, рафтінг')
+        та працює в компанії {company} на посаді {position}. Має такі хобі як {hobbies}.')
             ->format([
                 '{firstname}' => $celebrant->firstname,
                 '{date}' => $celebrant->birthday,
                 '{company}' => $celebrant->company->name,
-                '{position}' => $celebrant->position
+                '{position}' => $celebrant->position,
+                '{hobbies}' => $hobbiesString,
             ])
             ->outputParser(new JsonListParser());
-        // dd($prompt);
 
         $response = $this->httpClient->post('chat/completions', [
             'json' => [
