@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
 use App\Models\Hobby;
+use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,7 @@ class CelebrantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, )
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = Celebrant::create($request->validated());
         if ($request->hasFile('photoFile')) {
@@ -50,25 +51,7 @@ class CelebrantController extends Controller
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
 
-        $hobby_names = array_unique($request->hobbies);
-
-        $hobby_existed = Hobby::whereIn('name', $hobby_names)
-            ->select('name')
-            ->pluck('name')->toArray();
-
-        $new_hobby_names = array_diff($hobby_names, $hobby_existed);
-
-        foreach ($new_hobby_names as $name) {
-            $newHobby       = new Hobby();
-            $newHobby->name = $name;
-            $newHobby->save();
-        }
-
-        $hobby_ids = Hobby::whereIn('name', $hobby_names)
-            ->select('id')
-            ->pluck('id')->toArray();
-
-        $celebrant->hobbies()->attach($hobby_ids);
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
 
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
@@ -85,7 +68,7 @@ class CelebrantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CelebrantRequest $request, FileUploadService $fileUploadService, string $id)
+    public function update(CelebrantRequest $request, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies, string $id)
     {
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
 
@@ -98,25 +81,8 @@ class CelebrantController extends Controller
             $celebrant->photo = $filePath;
         }
 
-        $hobby_names = array_unique($request->hobbies);
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
 
-        $hobby_existed = Hobby::whereIn('name', $hobby_names)
-            ->select('name')
-            ->pluck('name')->toArray();
-
-        $new_hobby_names = array_diff($hobby_names, $hobby_existed);
-
-        foreach ($new_hobby_names as $name) {
-            $newHobby       = new Hobby();
-            $newHobby->name = $name;
-            $newHobby->save();
-        }
-
-        $hobby_ids = Hobby::whereIn('name', $hobby_names)
-            ->select('id')
-            ->pluck('id')->toArray();
-
-        $celebrant->hobbies()->sync($hobby_ids);
         $celebrant->update($request->all());
         return new CelebrantResource($celebrant);
     }
