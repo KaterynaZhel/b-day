@@ -5,6 +5,8 @@ namespace App\Http\Controllers\ApiManager;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
+use App\Models\Hobby;
+use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +37,7 @@ class CelebrantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, )
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = Celebrant::create($request->validated());
         if ($request->hasFile('photoFile')) {
@@ -48,7 +50,9 @@ class CelebrantController extends Controller
         }
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
-        $celebrant->hobbies()->attach(array_unique($request->hobbies));
+
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
+
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 
@@ -64,7 +68,7 @@ class CelebrantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CelebrantRequest $request, FileUploadService $fileUploadService, string $id)
+    public function update(CelebrantRequest $request, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies, string $id)
     {
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
 
@@ -76,6 +80,9 @@ class CelebrantController extends Controller
             $filePath         = "adminlte/dist/img/smile.png";
             $celebrant->photo = $filePath;
         }
+
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
+
         $celebrant->update($request->all());
         return new CelebrantResource($celebrant);
     }
