@@ -8,6 +8,8 @@ use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\GreetingCompany;
+use App\Models\Hobby;
+use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -27,27 +29,27 @@ class CelebrantController extends Controller
      */
     public function create()
     {
-        return view('admin.celebrants.create', ['celebrant_positions' => CelebrantPosition::$positions, 'companies' => Company::all()]);
+        return view('admin.celebrants.create', [
+            'celebrant_positions' => CelebrantPosition::$positions,
+            'companies' => Company::all(),
+            'hobbies' => Hobby::all()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request)
+    public function store(CelebrantRequest $request, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = new Celebrant($request->all());
-
-        // $company               = Company::firstOrCreate([
-        //     'name' => $request->input('company')
-        // ]);
-        // $celebrant->company_id = $company->id;
 
         if (is_uploaded_file($request->file('photoFile'))) {
             $path             = $request->file('photoFile')->store('public/CelebrantPhoto');
             $celebrant->photo = $path;
         }
-
         $celebrant->save();
+
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
 
         return redirect()->route('admin.celebrants.index');
     }

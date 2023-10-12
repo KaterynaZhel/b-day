@@ -77,6 +77,21 @@
                     @endforeach
                 </select>
             </div>
+
+            <div class="form-group">
+                <label for="hobbies">Інтереси</label>
+
+                <select id="hobbies" name="hobbies[]" class="form-control js-hobby-tags"" multiple=" multiple">
+
+                    @foreach($hobbies as $hobby)
+                    <option>{{ $hobby->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+
+
+
             <div>
                 <button type="submit" class="btn btn-primary">Створити</button>
             </div>
@@ -92,6 +107,10 @@
         $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        $(".js-hobby-tags").select2({
+            tags: true
         });
 
         //Date picker
