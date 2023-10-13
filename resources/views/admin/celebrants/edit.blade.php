@@ -87,6 +87,22 @@
 
             </div>
 
+            <div class="form-group">
+                <label for="hobbies">Інтереси</label>
+
+                <select id="hobbies" name="hobbies[]" class="form-control js-hobby-tags"" multiple=" multiple">
+
+                    @foreach($hobbies as $hobby)
+
+                    @if ($celebrant->hobbies->contains($hobby)))
+                    <option selected>{{$hobby->name}}</option>
+                    @else
+                    <option>{{$hobby->name}}</option>
+                    @endif
+                    @endforeach
+                </select>
+            </div>
+
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Зберегти зміни</button>
             </div>
@@ -107,5 +123,11 @@
             document.querySelector('.select2-search__field').focus();
         });
     });
+
+    $(".js-hobby-tags").select2({
+        tags: true
+    });
+
+
 </script>
 @endsection

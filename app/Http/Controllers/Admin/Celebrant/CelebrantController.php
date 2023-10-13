@@ -71,18 +71,24 @@ class CelebrantController extends Controller
     public function edit(string $id)
     {
         $celebrant = Celebrant::find($id);
-        return view('admin.celebrants.edit', ['celebrant' => $celebrant, 'celebrant_positions' => CelebrantPosition::$positions, 'companies' => Company::all()]);
+        return view('admin.celebrants.edit', [
+            'celebrant' => $celebrant,
+            'celebrant_positions' => CelebrantPosition::$positions,
+            'companies' => Company::all(),
+            'hobbies' => Hobby::all(),
+        ]);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CelebrantRequest $request, string $id)
+    public function update(CelebrantRequest $request, string $id, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = Celebrant::find($id);
         $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position']));
         $celebrant->save();
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
         return redirect('admin/celebrants')->withSuccess('Іменинник був успішно оновлений');
     }
 
