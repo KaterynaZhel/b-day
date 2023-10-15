@@ -37,7 +37,7 @@
                                 <tr class="odd">
                                     <td class="dtr-control sorting_1" tabindex="0">{{ $greetingCompany->id }}</td>
                                     <td>{{ $greetingCompany->message_company }}</td>
-                                    <td>{{ $greetingCompany->name_company }}</td>
+                                    <td>{{ $greetingCompany->company->name ?? 'Не визначено' }}</td>
                                     <td>{{ $greetingCompany->publish_at }}</td>
                                     <td class="project-actions d-flex justify-content-center">
                                         <a class="btn btn-info btn-sm" style="width:33px; height:30px; margin:4px 4px;"

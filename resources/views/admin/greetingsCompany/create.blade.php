@@ -22,12 +22,17 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="message_company">Привітання</label>
-                    <textarea class="form-control" id="message_company" name="message_company" rows="3" placeholder="Привітання..."></textarea>
+                    <textarea class="form-control" id="message_company" name="message_company" rows="3"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="name_company">Назва Компанії</label>
-                    <input class="form-control" id="name_company" name="name_company" placeholder="Назва Компанії">
+                    <label>Компанія</label>
+                    <select id="company" name="company_id" class="form-control select2bs4" style="width: 100%;">
+                        <option></option>
+                        @foreach ($companies as $company)
+                            <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div>
@@ -35,4 +40,17 @@
                 </div>
         </form>
     </div>
+@endsection
+
+@section('custom-script')
+    <script>
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+        //select2 autofocus
+        $(document).on('select2:open', () => {
+            document.querySelector('.select2-search__field').focus();
+        });
+    </script>
 @endsection
