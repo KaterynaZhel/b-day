@@ -29,4 +29,16 @@ class GreetingCompanyController extends Controller
             return GreetingCompanyResource::collection($greetingsCompany);
         }
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $greetingCompany = GreetingCompany::create($request->all());
+        $greetingCompany->company_id = Auth::user()->company_id;
+        $greetingCompany->save();
+
+        return (new GreetingCompanyResource($greetingCompany))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
+    }
 }
