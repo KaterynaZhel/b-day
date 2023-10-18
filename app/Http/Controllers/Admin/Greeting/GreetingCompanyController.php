@@ -18,7 +18,7 @@ class GreetingCompanyController extends Controller
     public function index($celebrant_id)
     {
         $greetingsCompany = GreetingCompany::where('celebrant_id', $celebrant_id)->get();
-        return view('admin.greetingsCompany.index', compact('greetingsCompany', 'celebrant_id'), ['companies' => Company::all()]);
+        return view('admin.greetingsCompany.index', compact('greetingsCompany', 'celebrant_id'));
     }
 
     /**
@@ -26,7 +26,7 @@ class GreetingCompanyController extends Controller
      */
     public function create($celebrant_id)
     {
-        return view('admin.greetingsCompany.create', compact('celebrant_id'), ['companies' => Company::all()]);
+        return view('admin.greetingsCompany.create', compact('celebrant_id'));
     }
 
     /**
@@ -35,7 +35,9 @@ class GreetingCompanyController extends Controller
     public function store(GreetingCompanyRequest $request, $celebrant_id)
     {
         $greetingsCompany             = new GreetingCompany($request->all() + ['celebrant_id' => $celebrant_id]);
+        $celebrant                    = Celebrant::find($celebrant_id);
         $greetingsCompany->publish_at = self::GreetingDate($celebrant_id);
+        $greetingsCompany->company_id = $celebrant->company_id;
         $greetingsCompany->save();
         return redirect()->route('admin.celebrants.show', $celebrant_id);
     }

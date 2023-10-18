@@ -25,16 +25,6 @@
                     <textarea class="form-control" id="message_company" name="message_company" rows="3"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label>Компанія</label>
-                    <select id="company" name="company_id" class="form-control select2bs4" style="width: 100%;">
-                        <option></option>
-                        @foreach ($companies as $company)
-                            <option value="{{ $company->id }}">{{ $company->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
                 <div>
                     <button type="submit" class="btn btn-primary">Зберегти</button>
                 </div>
