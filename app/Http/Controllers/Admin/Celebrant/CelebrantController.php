@@ -8,7 +8,10 @@ use App\Models\Celebrant;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\GreetingCompany;
+use App\Models\Hobby;
+use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
@@ -27,27 +30,33 @@ class CelebrantController extends Controller
      */
     public function create()
     {
-        return view('admin.celebrants.create', ['celebrant_positions' => CelebrantPosition::$positions, 'companies' => Company::all()]);
+        return view('admin.celebrants.create', [
+            'celebrant' => null,
+            'celebrant_positions' => CelebrantPosition::$positions,
+            'companies' => Company::all(),
+            'hobbies' => Hobby::all()
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request)
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = new Celebrant($request->all());
 
-        // $company               = Company::firstOrCreate([
-        //     'name' => $request->input('company')
-        // ]);
-        // $celebrant->company_id = $company->id;
-
-        if (is_uploaded_file($request->file('photoFile'))) {
-            $path             = $request->file('photoFile')->store('public/CelebrantPhoto');
-            $celebrant->photo = $path;
+        if ($request->hasFile('photoFile')) {
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
+        } else {
+            $filePath         = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
         }
 
         $celebrant->save();
+
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
 
         return redirect()->route('admin.celebrants.index');
     }
@@ -69,18 +78,35 @@ class CelebrantController extends Controller
     public function edit(string $id)
     {
         $celebrant = Celebrant::find($id);
-        return view('admin.celebrants.edit', ['celebrant' => $celebrant, 'celebrant_positions' => CelebrantPosition::$positions, 'companies' => Company::all()]);
+        return view('admin.celebrants.edit', [
+            'celebrant' => $celebrant,
+            'celebrant_positions' => CelebrantPosition::$positions,
+            'companies' => Company::all(),
+            'hobbies' => Hobby::all(),
+        ]);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CelebrantRequest $request, string $id)
+    public function update(CelebrantRequest $request, string $id, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = Celebrant::find($id);
-        $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position']));
+
+        if ($request->hasFile('photoFile')) {
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
+        } else {
+            $filePath         = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
+        }
+
+        $celebrant->update(request(['lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position']));
+
         $celebrant->save();
+        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
         return redirect('admin/celebrants')->withSuccess('Іменинник був успішно оновлений');
     }
 

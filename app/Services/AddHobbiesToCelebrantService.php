@@ -10,6 +10,10 @@ class AddHobbiesToCelebrantService
 {
     public function addHobbiesToCelebtant(Celebrant $celebrant, array $hobbies)
     {
+        if (empty($hobbies)) {
+            return;
+        }
+
         $hobby_names = array_unique($hobbies);
 
         $hobby_existed = Hobby::whereIn('name', $hobby_names)

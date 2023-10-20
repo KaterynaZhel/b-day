@@ -21,6 +21,17 @@
                 <b>Роль</b> <a class="float-right">{{$celebrant->position}}</a>
             </li>
 
+            <li class="list-group-item">
+                <b>Інтереси</b>
+                <ul class="float-right">
+                    @foreach($celebrant->hobbies as $key => $hobby)
+                    <li style="display: inline;">
+                        {{$hobby->name ?? ''}}{{ $key < count($celebrant->hobbies) - 1 ? ', ' : '' }}&nbsp;
+                    </li>
+                    @endforeach
+                </ul>
+            </li>
+
         </ul>
         <div class="row mb-3">
             <div class="col-sm-12">
