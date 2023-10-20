@@ -11,6 +11,7 @@ use App\Models\GreetingCompany;
 use App\Models\Hobby;
 use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
@@ -30,6 +31,7 @@ class CelebrantController extends Controller
     public function create()
     {
         return view('admin.celebrants.create', [
+            'celebrant' => null,
             'celebrant_positions' => CelebrantPosition::$positions,
             'companies' => Company::all(),
             'hobbies' => Hobby::all()
@@ -39,14 +41,19 @@ class CelebrantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CelebrantRequest $request, AddHobbiesToCelebrantService $addHobbies)
+    public function store(CelebrantRequest $request, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = new Celebrant($request->all());
 
-        if (is_uploaded_file($request->file('photoFile'))) {
-            $path             = $request->file('photoFile')->store('public/CelebrantPhoto');
-            $celebrant->photo = $path;
+        if ($request->hasFile('photoFile')) {
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
+        } else {
+            $filePath         = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
         }
+
         $celebrant->save();
 
         $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
@@ -83,10 +90,21 @@ class CelebrantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CelebrantRequest $request, string $id, AddHobbiesToCelebrantService $addHobbies)
+    public function update(CelebrantRequest $request, string $id, FileUploadService $fileUploadService, AddHobbiesToCelebrantService $addHobbies)
     {
         $celebrant = Celebrant::find($id);
-        $celebrant->update(request(['photo', 'lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position']));
+
+        if ($request->hasFile('photoFile')) {
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file);
+            $celebrant->photo = $filePath;
+        } else {
+            $filePath         = "adminlte/dist/img/smile.png";
+            $celebrant->photo = $filePath;
+        }
+
+        $celebrant->update(request(['lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position']));
+
         $celebrant->save();
         $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
         return redirect('admin/celebrants')->withSuccess('Іменинник був успішно оновлений');
