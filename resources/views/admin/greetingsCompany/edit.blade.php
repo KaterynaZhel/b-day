@@ -16,10 +16,10 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.celebrants.greetingsCompany.update', [$greetingsCompany->celebrant_id, $greetingsCompany->id]) }}"
+        <form
+            action="{{ route('admin.celebrants.greetingsCompany.update', [$greetingsCompany->celebrant_id, $greetingsCompany->id]) }}"
             method="post" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
             <div class="card-body">
                 <div class="form-group">
                     <label for="message_company">Привітання</label>
