@@ -16,31 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.celebrants.greetingsCompany.store', $celebrant_id) }}" method="post"
-            enctype="multipart/form-data">
-            @csrf
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="message_company">Привітання</label>
-                    <textarea class="form-control" id="message_company" name="message_company" rows="3"></textarea>
-                </div>
+        @include('admin.greetingsCompany.greetingCompany_form')
 
-                <div>
-                    <button type="submit" class="btn btn-primary">Зберегти</button>
-                </div>
-        </form>
     </div>
-@endsection
-
-@section('custom-script')
-    <script>
-        //Initialize Select2 Elements
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        })
-        //select2 autofocus
-        $(document).on('select2:open', () => {
-            document.querySelector('.select2-search__field').focus();
-        });
-    </script>
 @endsection

@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin\Greeting;
 
 use App\Models\Celebrant;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GreetingCompanyRequest;
-use App\Models\Company;
 use App\Models\GreetingCompany;
 
 class GreetingCompanyController extends Controller
@@ -47,7 +45,7 @@ class GreetingCompanyController extends Controller
      */
     public function edit($celebrant_id, GreetingCompany $greetingsCompany)
     {
-        return view('admin.greetingsCompany.edit', compact('celebrant_id', 'greetingsCompany'), ['companies' => Company::all()]);
+        return view('admin.greetingsCompany.edit', compact('celebrant_id', 'greetingsCompany'));
     }
 
     /**
@@ -55,7 +53,7 @@ class GreetingCompanyController extends Controller
      */
     public function update($celebrant_id, GreetingCompany $greetingsCompany)
     {
-        $greetingsCompany->update(request(['message_company', 'company_id']));
+        $greetingsCompany->update(request(['message_company']));
         return redirect()->route('admin.celebrants.show', $celebrant_id)->withSuccess('Привітання від Компанії було успішно оновлене');
     }
 
