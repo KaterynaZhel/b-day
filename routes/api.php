@@ -51,7 +51,8 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::get('/greetings', [App\Http\Controllers\ApiManager\GreetingController::class, 'index'])->name('manager.greetings.index');
     Route::delete('/greetings/{id}', [App\Http\Controllers\ApiManager\GreetingController::class, 'destroy'])->name('manager.destroy');
     Route::get('/greetingsCompany', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'index'])->name('manager.greetingsCompany.index');
-    Route::get('/hobbies', [App\Http\Controllers\ApiManager\ListHobbiesController::class, 'index']);
+
+    Route::get('/hobbies', [App\Http\Controllers\ApiManager\HobbyController::class, 'index']);
     // Routes fot Chat GPT
     Route::get('/chat/{id}', [App\Http\Controllers\ChatGPT\ChatGPTController::class, 'askToChatGpt']);
 });
