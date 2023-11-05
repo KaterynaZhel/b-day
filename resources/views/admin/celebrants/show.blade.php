@@ -43,6 +43,8 @@
         </div>
 
         @include('includes.admin.showGreetingsCompany')
+        @include('includes.admin.showGifts')
+
+
     </div>
-</div>
-@endsection
+    @endsection

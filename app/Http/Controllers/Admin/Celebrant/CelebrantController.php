@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\GreetingCompany;
 use App\Models\Hobby;
 use App\Services\AddHobbiesToCelebrantService;
+use App\Services\GiftService;
 use Carbon\Carbon;
 use App\Services\FileUploadService;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +70,9 @@ class CelebrantController extends Controller
     {
         $celebrant        = Celebrant::find($id);
         $greetingsCompany = GreetingCompany::all()->where('celebrant_id', "==", $id);
-        return view('admin.celebrants.show', compact('celebrant', 'greetingsCompany'));
+        $gifts            = (new GiftService)->generateGifts($celebrant);
+
+        return view('admin.celebrants.show', compact('celebrant', 'greetingsCompany', 'gifts'));
     }
 
     /**
