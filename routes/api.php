@@ -53,6 +53,9 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::get('/greetingsCompany', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'index'])->name('manager.greetingsCompany.index');
     Route::post('/greetingsCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'store'])->name('manager.greetingsCompany.store');
 
+    Route::get('/hobbies', [App\Http\Controllers\ApiManager\HobbyController::class, 'index']);
+    Route::get('/positions', [App\Http\Controllers\ApiManager\PositionCelebrantController::class, 'index']);
+
     // Routes fot Chat GPT
     Route::get('/chat/{id}', [App\Http\Controllers\ChatGPT\ChatGPTController::class, 'askToChatGpt']);
 });

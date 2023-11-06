@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Greeting;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GreetingCompanyRequest;
+use App\Models\Celebrant;
 use App\Models\GreetingCompany;
 use App\Services\GreetingCompanyFilterService;
 
@@ -29,15 +31,12 @@ class GreetingCompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $celebrant_id, GreetingCompanyFilterService $greetingCompanyfileterService)
+    public function store(GreetingCompanyRequest $request, $celebrant_id, GreetingCompanyFilterService $greetingCompanyfileterService)
     {
-        $validated                    = $request->validate([
-            'message_company' => 'required|min:2|max:500',
-            'name_company' => 'required|min:2|max:30',
-            'celebrant_id' => 'numeric|exists:celebrants,id',
-        ]);
         $greetingsCompany             = new GreetingCompany($request->all() + ['celebrant_id' => $celebrant_id]);
+        $celebrant                    = Celebrant::find($celebrant_id);
         $greetingsCompany->publish_at = $greetingCompanyfileterService->GreetingDate($celebrant_id);
+        $greetingsCompany->company_id = $celebrant->company_id;
         $greetingsCompany->save();
         return redirect()->route('admin.celebrants.show', $celebrant_id);
     }
@@ -55,7 +54,7 @@ class GreetingCompanyController extends Controller
      */
     public function update($celebrant_id, GreetingCompany $greetingsCompany)
     {
-        $greetingsCompany->update(request(['message_company', 'name_company']));
+        $greetingsCompany->update(request(['message_company']));
         return redirect()->route('admin.celebrants.show', $celebrant_id)->withSuccess('Привітання від Компанії було успішно оновлене');
     }
 

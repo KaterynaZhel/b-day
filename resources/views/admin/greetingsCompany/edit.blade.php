@@ -16,25 +16,7 @@
             </div>
         @endif
 
-        <form
-            action="{{ route('admin.celebrants.greetingsCompany.update', [$greetingsCompany->celebrant_id, $greetingsCompany->id]) }}"
-            method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="message_company">Привітання</label>
-                    <textarea class="form-control" id="message_company" name="message_company" rows="3" placeholder="Привітання...">{{ $greetingsCompany->message_company }}</textarea>
-                </div>
+        @include('admin.greetingsCompany.greetingCompany_form')
 
-                <div class="form-group">
-                    <label for="name_company">Назва Компанії</label>
-                    <input class="form-control" id="name_company" name="name_company"
-                        value="{{ $greetingsCompany->name_company }}" placeholder="Назва Компанії">
-                </div>
-
-                <div>
-                    <button type="submit" class="btn btn-primary">Зберегти</button>
-                </div>
-        </form>
     </div>
 @endsection

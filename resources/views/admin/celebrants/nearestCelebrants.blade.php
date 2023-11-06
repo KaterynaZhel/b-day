@@ -57,7 +57,7 @@
                                 <td></td>
                                 <td></td>
                                 @else
-                                <td>{{$celebrant->lastGreetingsCompany->name_company }}</td>
+                                <td>{{$celebrant->lastGreetingsCompany->company->name ?? 'Не визначено' }}</td>
                                 <td>{{$celebrant->lastGreetingsCompany->publish_at }}</td>
                                 @endif
 
