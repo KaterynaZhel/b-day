@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Greeting;
 
-use App\Models\Celebrant;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GreetingCompanyRequest;
+use App\Models\Celebrant;
 use App\Models\GreetingCompany;
+use App\Services\GreetingCompanyFilterService;
 
 class GreetingCompanyController extends Controller
 {
@@ -30,11 +31,11 @@ class GreetingCompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(GreetingCompanyRequest $request, $celebrant_id)
+    public function store(GreetingCompanyRequest $request, $celebrant_id, GreetingCompanyFilterService $greetingCompanyfileterService)
     {
         $greetingsCompany             = new GreetingCompany($request->all() + ['celebrant_id' => $celebrant_id]);
         $celebrant                    = Celebrant::find($celebrant_id);
-        $greetingsCompany->publish_at = self::GreetingDate($celebrant_id);
+        $greetingsCompany->publish_at = $greetingCompanyfileterService->GreetingDate($celebrant_id);
         $greetingsCompany->company_id = $celebrant->company_id;
         $greetingsCompany->save();
         return redirect()->route('admin.celebrants.show', $celebrant_id);
@@ -64,24 +65,5 @@ class GreetingCompanyController extends Controller
     {
         $greetingsCompany->delete();
         return redirect()->route('admin.celebrants.show', $celebrant_id)->withSuccess('Привітання від Компанії було успішно видалено');
-    }
-
-    /**
-     * Generate date for publishing greeting company
-     * @param int $celebrant_id
-     * @return mixed
-     */
-
-    public static function GreetingDate(int $celebrant_id)
-    {
-        $birthday            = Celebrant::where('id', $celebrant_id)->value('birthday');
-        $birthdayCurrentYear = Carbon::create($birthday)->year(now()->format('Y'))->format('Y-m-d');
-        $dateNow             = Carbon::now()->startOfDay();
-        if (Carbon::create($birthdayCurrentYear)->gte($dateNow)) {
-            return $birthdayCurrentYear;
-        } else {
-
-            return Carbon::create($birthdayCurrentYear)->addYear(1)->format('Y-m-d');
-        }
     }
 }

@@ -51,6 +51,7 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::get('/greetings', [App\Http\Controllers\ApiManager\GreetingController::class, 'index'])->name('manager.greetings.index');
     Route::delete('/greetings/{id}', [App\Http\Controllers\ApiManager\GreetingController::class, 'destroy'])->name('manager.destroy');
     Route::get('/greetingsCompany', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'index'])->name('manager.greetingsCompany.index');
+    Route::post('/greetingsCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'store'])->name('manager.greetingsCompany.store');
 
     Route::get('/hobbies', [App\Http\Controllers\ApiManager\HobbyController::class, 'index']);
     Route::get('/positions', [App\Http\Controllers\ApiManager\PositionCelebrantController::class, 'index']);
