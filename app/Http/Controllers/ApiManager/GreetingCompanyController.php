@@ -35,17 +35,14 @@ class GreetingCompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(GreetingCompanyRequest $request, $celebrant_id)
+    public function store(GreetingCompanyRequest $request, $celebrant_id, GreetingCompanyFilterService $greetingCompanyfileterService)
     {
-        $company_id_Auth = Auth::user()->company_id;
-        $company_id_Celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($celebrant_id)->company_id;
-
-        if ($company_id_Celebrant == $company_id_Auth) {
-            $greetingCompany = GreetingCompany::create($request->all() + ['celebrant_id' => $celebrant_id]);
-            $greetingCompany->company_id = Auth::user()->company_id;
-            $greetingCompany->publish_at = app('App\Http\Controllers\Admin\Greeting\GreetingCompanyController')->GreetingDate($celebrant_id);
-            $greetingCompany->save();
-            return (new GreetingCompanyResource($greetingCompany))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
-        }
+        $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($celebrant_id);
+        $greetingCompany = GreetingCompany::create($request->all() + ['celebrant_id' => $celebrant_id]);
+        $greetingCompany->company_id = Auth::user()->company_id;
+        $greetingCompany->celebrant_id = $celebrant->id;
+        $greetingCompany->publish_at = $greetingCompanyfileterService->GreetingDate($celebrant_id);
+        $greetingCompany->save();
+        return (new GreetingCompanyResource($greetingCompany))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 }
