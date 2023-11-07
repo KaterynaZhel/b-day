@@ -50,9 +50,6 @@ class CelebrantController extends Controller
             $file             = $request->file('photoFile');
             $filePath         = $fileUploadService->uploadFile($file);
             $celebrant->photo = $filePath;
-        } else {
-            $filePath         = "adminlte/dist/img/smile.png";
-            $celebrant->photo = $filePath;
         }
 
         $celebrant->save();
@@ -71,6 +68,8 @@ class CelebrantController extends Controller
         $celebrant        = Celebrant::find($id);
         $greetingsCompany = GreetingCompany::all()->where('celebrant_id', "==", $id);
         $gifts            = (new GiftService)->generateGifts($celebrant);
+
+
 
         return view('admin.celebrants.show', compact('celebrant', 'greetingsCompany', 'gifts'));
     }
@@ -100,9 +99,6 @@ class CelebrantController extends Controller
         if ($request->hasFile('photoFile')) {
             $file             = $request->file('photoFile');
             $filePath         = $fileUploadService->uploadFile($file);
-            $celebrant->photo = $filePath;
-        } else {
-            $filePath         = "adminlte/dist/img/smile.png";
             $celebrant->photo = $filePath;
         }
 
