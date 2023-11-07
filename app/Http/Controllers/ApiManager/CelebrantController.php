@@ -44,10 +44,8 @@ class CelebrantController extends Controller
             $file             = $request->file('photoFile');
             $filePath         = $fileUploadService->uploadFile($file);
             $celebrant->photo = $filePath;
-        } else {
-            $filePath         = "adminlte/dist/img/smile.png";
-            $celebrant->photo = $filePath;
         }
+
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
 
@@ -75,9 +73,6 @@ class CelebrantController extends Controller
         if ($request->hasFile('photoFile')) {
             $file             = $request->file('photoFile');
             $filePath         = $fileUploadService->uploadFile($file);
-            $celebrant->photo = $filePath;
-        } else {
-            $filePath         = "adminlte/dist/img/smile.png";
             $celebrant->photo = $filePath;
         }
 
