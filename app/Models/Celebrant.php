@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\CelebrantPhoto;
 use App\Casts\CelebrantPosition;
+use App\Concerns\Filterable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ use App\Models\Company;
 class Celebrant extends Model
 {
     use HasFactory;
+    use Filterable;
+
     protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position'];
 
     protected $casts = [
@@ -47,5 +50,4 @@ class Celebrant extends Model
     {
         return $this->belongsToMany(Hobby::class, 'hobby_celebrant', 'celebrant_id', 'hobby_id');
     }
-
 }
