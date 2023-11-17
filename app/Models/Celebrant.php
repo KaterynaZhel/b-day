@@ -15,7 +15,7 @@ class Celebrant extends Model
     use HasFactory;
     use Filterable;
 
-    protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'company_id', 'position'];
+    protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'email', 'company_id', 'position'];
 
     protected $casts = [
         'position' => CelebrantPosition::class,

@@ -24,6 +24,7 @@ class CelebrantResource extends JsonResource
             'firstname' => $this->firstname,
             'middlename' => $this->middlename,
             'birthday' => $this->birthday,
+            'email' => $this->email,
             'company' => new CompanyResource($this->company),
             'position' => $this->position,
             'hobbies' => $this->hobbies->pluck('name', 'id'),
