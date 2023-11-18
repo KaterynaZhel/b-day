@@ -56,6 +56,9 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::get('/hobbies', [App\Http\Controllers\ApiManager\HobbyController::class, 'index']);
     Route::get('/positions', [App\Http\Controllers\ApiManager\PositionCelebrantController::class, 'index']);
 
+    Route::get('/user/{id}', [App\Http\Controllers\ApiManager\UserController::class, 'show']);
+    Route::post('/user/{id}', [App\Http\Controllers\ApiManager\UserController::class, 'update']);
+
     // Routes fot Chat GPT
     Route::get('/chat/{id}', [App\Http\Controllers\ChatGPT\ChatGPTController::class, 'askToChatGpt']);
 });

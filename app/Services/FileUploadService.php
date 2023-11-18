@@ -9,14 +9,14 @@ use Illuminate\Support\Str;
 
 class FileUploadService
 {
-    public function uploadFile($file)
+    public function uploadFile($file, $photo_directory)
     {
         $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
 
         /** @var Illuminate\Filesystem\FilesystemAdapter */
         $filesystem = Storage::disk('public');
-        $filesystem->putFileAs('/CelebrantPhoto', $file, $fileName);
+        $filesystem->putFileAs("/$photo_directory", $file, $fileName);
 
-        return 'CelebrantPhoto/' . $fileName;
+        return "$photo_directory/" . $fileName;
     }
 }
