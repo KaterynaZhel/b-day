@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\ApiManager;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\CelebrantFilter;
 use App\Http\Resources\CelebrantResource;
 use App\Models\Celebrant;
-use App\Models\Hobby;
 use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class CelebrantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, CelebrantFilter $filter)
     {
         $validated = $request->validate([
             'number_days' => 'nullable|numeric',
@@ -29,7 +29,7 @@ class CelebrantController extends Controller
             $number_days = $request->input('number_days');
             return $this->nearestCelebrants($number_days);
         } else {
-            $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->paginate(21);
+            $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->filter($filter)->paginate(21);
             return CelebrantResource::collection($celebrants);
         }
     }
@@ -101,8 +101,7 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        }
-        ;
+        };
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
