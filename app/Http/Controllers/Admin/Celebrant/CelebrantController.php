@@ -48,7 +48,7 @@ class CelebrantController extends Controller
 
         if ($request->hasFile('photoFile')) {
             $file             = $request->file('photoFile');
-            $filePath         = $fileUploadService->uploadFile($file);
+            $filePath         = $fileUploadService->uploadFile($file, 'CelebrantPhoto');
             $celebrant->photo = $filePath;
         }
 
@@ -98,7 +98,7 @@ class CelebrantController extends Controller
 
         if ($request->hasFile('photoFile')) {
             $file             = $request->file('photoFile');
-            $filePath         = $fileUploadService->uploadFile($file);
+            $filePath         = $fileUploadService->uploadFile($file, 'CelebrantPhoto');
             $celebrant->photo = $filePath;
         }
 

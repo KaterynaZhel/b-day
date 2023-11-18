@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\ManagerResources\UserResource;
 use App\Models\User;
-use App\Services\UserUploadService;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -24,7 +24,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request, UserUploadService $userUploadService, string $id)
+    public function update(UserRequest $request, FileUploadService $fileUploadService, string $id)
     {
         $user    = User::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
         $company = $user->company;
@@ -33,7 +33,7 @@ class UserController extends Controller
 
         if ($request->hasFile('photoFile')) {
             $file        = $request->file('photoFile');
-            $filePath    = $userUploadService->uploadFile($file);
+            $filePath    = $fileUploadService->uploadFile($file, 'UserPhoto');
             $user->photo = $filePath;
         }
 
