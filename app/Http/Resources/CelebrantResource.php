@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Company;
+use App\Http\Resources\GreetingCompanyResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Storage;
 
 class CelebrantResource extends JsonResource
 {
@@ -26,6 +25,7 @@ class CelebrantResource extends JsonResource
             'birthday' => $this->birthday,
             'email' => $this->email,
             'company' => new CompanyResource($this->company),
+            'greetingsCompany' => GreetingCompanyResource::collection($this->greetingsCompany),
             'position' => $this->position,
             'hobbies' => $this->hobbies->pluck('name', 'id'),
         ];
