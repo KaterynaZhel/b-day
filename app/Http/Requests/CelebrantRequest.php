@@ -31,7 +31,7 @@ class CelebrantRequest extends FormRequest
             'email' => 'required|email|unique:celebrants',
             'company' => ['numeric', 'company_id' => 'exists:companies,id'],
             'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
-            'hobbies' => 'array',
+            'hobbies' => 'nullable|array',
             'hobbies.*' => 'string',
             'photoFile' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ];

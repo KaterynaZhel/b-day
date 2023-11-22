@@ -48,8 +48,9 @@ class CelebrantController extends Controller
 
         $celebrant->company_id = Auth::user()->company_id;
         $celebrant->save();
-
-        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
+        if ($request->filled('hobbies')) {
+            $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
+        }
 
         return (new CelebrantResource($celebrant))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
@@ -76,7 +77,9 @@ class CelebrantController extends Controller
             $celebrant->photo = $filePath;
         }
 
-        $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
+        if ($request->filled('hobbies')) {
+            $addHobbies->addHobbiesToCelebtant($celebrant, $request->hobbies);
+        }
 
         $celebrant->update($request->all());
         return new CelebrantResource($celebrant);
@@ -101,7 +104,8 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        };
+        }
+        ;
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
