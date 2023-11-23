@@ -50,4 +50,9 @@ class Celebrant extends Model
     {
         return $this->belongsToMany(Hobby::class, 'hobby_celebrant', 'celebrant_id', 'hobby_id');
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }
