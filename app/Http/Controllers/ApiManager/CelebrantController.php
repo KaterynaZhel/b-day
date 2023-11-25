@@ -29,7 +29,7 @@ class CelebrantController extends Controller
             $number_days = $request->input('number_days');
             return $this->nearestCelebrants($number_days);
         } else {
-            $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->filter($filter)->paginate(21);
+            $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->filter($filter)->paginate(12);
             return CelebrantResource::collection($celebrants);
         }
     }
