@@ -104,8 +104,7 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        }
-        ;
+        };
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
