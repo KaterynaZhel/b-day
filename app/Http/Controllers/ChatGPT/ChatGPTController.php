@@ -18,7 +18,7 @@ class ChatGPTController extends Controller
             'gift_budget' => 'numeric',
         ]);
 
-        $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
+        $celebrant = Celebrant::findByCompany($id)->findOrFail($id);
 
         $celebrant->gift_budget = $request->input('gift_budget');
         $celebrant->save();
