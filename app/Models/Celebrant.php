@@ -6,9 +6,11 @@ use App\Casts\CelebrantPhoto;
 use App\Casts\CelebrantPosition;
 use App\Concerns\Filterable;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 
 class Celebrant extends Model
 {
@@ -55,4 +57,10 @@ class Celebrant extends Model
     {
         return $this->hasMany(Vote::class);
     }
+
+    public function scopeFindByCompany(Builder $query, $id)
+    {
+        return $query->where('company_id', '=', Auth::user()->company_id);
+    }
+
 }

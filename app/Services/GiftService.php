@@ -9,6 +9,7 @@ use App\Prompts\Chat\UserMessagePromptTemplate;
 use App\Prompts\PromptTemplate;
 use DiDom\Document;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Arr;
 use JsonException;
 
@@ -59,8 +60,15 @@ class GiftService
 
             foreach ($gifts_AI as $gift) {
 
-                $response = $client->get('https://prom.ua/ua/search?search_term=' . $gift);
-                $html     = $response->getBody()->getContents();
+                $request  = new Request('GET', 'https://prom.ua/ua/search');
+                $response = $client->send($request, [
+                    'query' => [
+                        'search_term' => $gift,
+                        'price_local__lte' => $celebrant->gift_budget,
+                    ]
+                ]);
+
+                $html = $response->getBody()->getContents();
 
                 $document = new Document($html);
 
@@ -73,8 +81,11 @@ class GiftService
                         'link' => 'https://prom.ua' . $good->first('*[data-qaid=product_link]')->attr('href'),
                         'title' => $good->first('*[data-qaid=product_link]')->attr('title'),
                         'picture' => $good->first('*[data-qaid=image_link] img')->attr('src'),
+                        'price' => $good->first('*[data-qaid=product_price]')->attr('data-qaprice'),
+
                     ];
                 }
+
             }
             return $results;
 
