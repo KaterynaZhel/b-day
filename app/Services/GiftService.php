@@ -90,8 +90,9 @@ class GiftService
             return $results;
 
 
-        } catch (JsonException $exception) {
+        } catch (\Throwable $exception) {
             $exception->getMessage();
+            return [];
         }
     }
 }
