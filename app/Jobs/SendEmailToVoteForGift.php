@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class SendEmailToVoteForGift implements ShouldQueue
 {
@@ -29,7 +30,11 @@ class SendEmailToVoteForGift implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->employee->email)
-            ->send(new EmailToVoteForGift($this->employee));
+        try {
+            Mail::to($this->employee->email)->send(new EmailToVoteForGift($this->employee));
+            Log::info("Email sent successfully to: " . $this->employee->email);
+        } catch (\Throwable $th) {
+            Log::error("Failed to send email to: " . $this->employee->email . " Error: " . $th->getMessage());
+        }
     }
 }
