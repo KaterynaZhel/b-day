@@ -26,7 +26,7 @@ class EmailToVoteForGift extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('example@example.com', 'Test Sender'),
+            from: new Address('birthdays.company@gmail.com', 'B-Day company'),
             subject: 'Прийми участь у Голосуванні за варіант подарунка',
         );
     }

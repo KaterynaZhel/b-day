@@ -38,7 +38,3 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     ]);
     Route::get('/nearestCelebrants', [App\Http\Controllers\Admin\Celebrant\CelebrantController::class, 'nearestCelebrants'])->name('admin.celebrants.nearestCelebrants');
 });
-
-// Routes to send a voting email
- 
-Route::get('/sendEmail', [App\Http\Controllers\Mail\EmailController::class, 'sendEmail']);
