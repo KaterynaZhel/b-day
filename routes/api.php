@@ -60,7 +60,7 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::post('/user/{id}', [App\Http\Controllers\ApiManager\UserController::class, 'update']);
 
     // Routes fot Chat GPT
-    Route::get('/chat/{id}', [App\Http\Controllers\ChatGPT\ChatGPTController::class, 'askToChatGpt']);
+    Route::post('/chat/{id}', [App\Http\Controllers\ChatGPT\ChatGPTController::class, 'askToChatGpt']);
 
     // Routes to send a voting email
     Route::post('/sendEmail', [App\Http\Controllers\Mail\EmailController::class, 'sendEmail']);

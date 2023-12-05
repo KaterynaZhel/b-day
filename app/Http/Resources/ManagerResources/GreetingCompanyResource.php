@@ -16,8 +16,8 @@ class GreetingCompanyResource extends JsonResource
     {
         return [
             'celebrant_id' => $this->celebrant_id,
-            'celebrant' => $this->celebrant()->select('id', 'lastname', 'firstname', 'birthday')->get(),
-            'company' => $this->company()->select('id', 'name')->get(),
+            'celebrant' => $this->celebrant->setVisible(['id', 'lastname', 'firstname', 'birthday']),
+            'company' => $this->company->setVisible(['id', 'name']),
             'message_company' => $this->message_company,
             'publish_at' => $this->publish_at,
         ];

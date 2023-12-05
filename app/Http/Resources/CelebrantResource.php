@@ -28,6 +28,7 @@ class CelebrantResource extends JsonResource
             'greetingsCompany' => GreetingCompanyResource::collection($this->greetingsCompany),
             'position' => $this->position,
             'hobbies' => $this->hobbies->pluck('name', 'id'),
+            'gift_budget' => $this->gift_budget,
         ];
     }
 }
