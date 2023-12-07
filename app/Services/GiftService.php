@@ -21,10 +21,14 @@ class GiftService
     {
         $hobbies = collect($celebrant->hobbies()->pluck('name'))->implode(',');
 
-        $prompt = PromptTemplate::create(template: 'Які ідеї подарунків для співробітника по імені {firstname}, який народився {date}, 
-        та працює в компанії {company} на посаді {position}. Має такі хобі як {hobbies}.')
+        $prompt = PromptTemplate::create(template: 'Які ідеї подарунків для співробітника по імені {firstname} та прізвищу {lastname}, який народився {date}, 
+        та працює в компанії {company} на посаді {position}. Має такі хобі як {hobbies}. 
+        Зроби висновок якої статі іменинник та розрахуй вік іменинника. 
+        Враховуючи стать, вік та хобі запропонуй варіанти подарунків. Не пропонуй дитячі товари. 
+        Пропонуючи варіант подарунку, конкретезуй його ознаки. Наприклад важи жанр книги, жанр пропонуй враховуючи вік та стать іменинника.')
             ->format([
                 '{firstname}' => $celebrant->firstname,
+                '{lastname}' => $celebrant->lastname,
                 '{date}' => $celebrant->birthday,
                 '{company}' => $celebrant->company->name,
                 '{position}' => $celebrant->position,
