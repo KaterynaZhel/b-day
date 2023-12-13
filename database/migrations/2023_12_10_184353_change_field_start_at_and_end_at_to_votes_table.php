@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('votes', function (Blueprint $table) {
-            $table->dateTime('start_at')->nullable()->change();
-            $table->dateTime('end_at')->nullable()->change();
+            $table->dateTime('start_at')->nullable(true)->change();
+            $table->dateTime('end_at')->nullable(true)->change();
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('votes', function (Blueprint $table) {
-            $table->dateTime('start_at');
-            $table->dateTime('end_at');
+            $table->dateTime('start_at')->nullable(false)->change();
+            $table->dateTime('end_at')->nullable(false)->change();
         });
     }
 };

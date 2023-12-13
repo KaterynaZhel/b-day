@@ -36,13 +36,11 @@ class VoteController extends Controller
      */
     public function store(VoteRequest $request, $celebrant_id)
     {
-        $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($celebrant_id);
         $gifts = Gift::where('celebrant_id', $celebrant_id)->get();
         $vote = Vote::create($request->all() + ['celebrant_id' => $celebrant_id]);
         $vote->start_at = now();
         $vote->end_at = now()->addDay();
         $vote->status = VoteStatus::inProgress;
-        $vote->celebrant_id = $celebrant->id;
 
         // Associate each gift with the vote
         foreach ($gifts as $gift) {

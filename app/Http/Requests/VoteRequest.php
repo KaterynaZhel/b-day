@@ -22,8 +22,6 @@ class VoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_at' => 'date_format:Y-m-d H:i:s',
-            'end_at' => 'date_format:Y-m-d H:i:s',
             'celebrant' => ['numeric', 'celebrant_id' => 'exists:celebrants,id'],
             'gift' => ['numeric', 'gift_id' => 'exists:gifts,id'],
         ];
