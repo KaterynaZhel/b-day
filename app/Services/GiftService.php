@@ -60,10 +60,8 @@ class GiftService
         $results  = [];
         try {
             $gifts_AI = Arr::get(json_decode($response->getBody(), true, $depth = 512, JSON_THROW_ON_ERROR), 'choices.0.message.content', []);
-            // dd($gifts_AI);
             $gifts_AI = Arr::pluck(json_decode($gifts_AI, true, $depth = 512, JSON_THROW_ON_ERROR)['data'], 'gift name');
             $client   = new Client(['http_errors' => false,]);
-            // dd($gifts_AI);
             Log::debug('ChatGPT gift ideas: ' . json_encode($gifts_AI, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
             foreach ($gifts_AI as $gift) {
 
@@ -81,13 +79,11 @@ class GiftService
                     continue;
                 }
 
-                $html = $response->getBody()->getContents();
-                //dd($html);
+                $html     = $response->getBody()->getContents();
                 $document = new Document($html);
 
                 $goods = $document->find('*[data-qaid=product_block]');
-                $goods = array_slice($goods, 0, 5);
-                // dd($goods);
+                $goods = array_slice($goods, 0, 2);
                 foreach ($goods as $good) {
 
                     $results[] = [
@@ -100,23 +96,27 @@ class GiftService
                 }
             }
             Log::debug('Prom parsed results: ' . json_encode($results, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
-            // return $results;
-            // dd($results);
-
             // аналіз варіантів подарунків з прому після першого запиту
 
-            $prompt = PromptTemplate::create(template: 'Проаналізуй варіанти подарунків {results}. 
-            Та обери 5 унікальник товарів різних типів, які найкраще підходять імениннику. 
+            $prompt = PromptTemplate::create(template: 'Тобі наданий масив подарунків {results}. 
+            Твоя задача серед {results}, обрати 8 унікальник товарів різних типів, які найкраще підходять імениннику. 
             Врахуй вік та стать іменинника.
-            Ці дані візьми з імені {firstname}, прізвища {lastname}, та дати народження {date}.
-            Товари для дітей відкидай')
+            Вік та стать вирахуй, використовуючи дані імені {firstname}, прізвища {lastname}, та дати народження {date}
+            У відповідь не включай схожі товари. 
+            Не включати товари з аналогічними назвами. 
+            Наприклад, я шукаю рюкзак туристичний, але не хочу, щоб серед результатів були "Рюкзак туристичний CATЕARA 28L" та "Рюкзак туристичний Crossroad 28L". 
+            Враховуйте тільки унікальні назви товарів.
+            Товари для дітей відкидай. Наприклад, "триколісний велосипед" не має бути серед результатів.
+            Якщо не знаєш що відповісти, не відповідай нічого.')
                 ->format([
                     '{firstname}' => $celebrant->firstname,
                     '{lastname}' => $celebrant->lastname,
                     '{date}' => $celebrant->birthday,
-                    '{results}' => json_encode(Arr::pluck($results, 'title')),
+                    '{results}' => json_encode(Arr::pluck($results, 'title'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
                 ])
                 ->outputParser(new JsonPromParser());
+
+            Log::debug('Prom parsed titles: ' . json_encode(Arr::pluck($results, 'title'), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
             $httpClient = new Client([
                 'base_uri' => 'https://api.openai.com/v1/',
@@ -139,7 +139,6 @@ class GiftService
                 ],
             ]);
 
-            //dd($response);
             $gifts_ids = Arr::get(json_decode($response->getBody(), true, $depth = 512, JSON_THROW_ON_ERROR), 'choices.0.message.content', []);
             Log::debug('ChatGPT unique ids: ' . json_encode($gifts_ids));
 
