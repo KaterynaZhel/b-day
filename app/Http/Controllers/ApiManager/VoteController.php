@@ -16,22 +16,6 @@ use Illuminate\Support\Facades\Hash;
 class VoteController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(VoteRequest $request, $celebrant_id)
@@ -48,43 +32,13 @@ class VoteController extends Controller
             $gift->save();
         }
 
-        // Generate a unique hash for the link using Hash facade
-        $hash = Hash::make($vote->id . $vote->celebrant_id);
+        // Generate a unique hash for the link using Hash facade (different hash for each email).
+        $celebrant = Celebrant::findOrFail($celebrant_id);
+        $email = $celebrant->email;
+        $hash = Hash::make($email);
         $vote->hash = $hash;
         $vote->save();
 
         return (new VoteResource($vote))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
