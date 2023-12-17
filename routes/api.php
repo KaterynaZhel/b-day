@@ -62,6 +62,9 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     // Routes fot Chat GPT
     Route::post('/chat/{id}', [App\Http\Controllers\ChatGPT\ChatGPTController::class, 'askToChatGpt']);
 
+    //storage of gift options
+    Route::post('/giftOptions', [App\Http\Controllers\ApiManager\GiftOptionsController::class, 'store']);
+
     // Routes to send a voting email
     Route::post('/sendEmail', [App\Http\Controllers\Mail\EmailController::class, 'sendEmail']);
 });
