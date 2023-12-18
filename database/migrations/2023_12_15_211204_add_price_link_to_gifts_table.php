@@ -13,6 +13,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('gifts', function (Blueprint $table) {
+            $table->dropColumn('price');
+        });
+
+        Schema::table('gifts', function (Blueprint $table) {
             $table->double('price', 8, 2)->after('title');
         });
     }
@@ -24,6 +28,11 @@ return new class extends Migration {
     {
         Schema::table('gifts', function (Blueprint $table) {
             $table->dropColumn('price');
+        });
+
+
+        Schema::table('gifts', function (Blueprint $table) {
+            $table->string('price')->after('title')->nullable();
         });
     }
 };
