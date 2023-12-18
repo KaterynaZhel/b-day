@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiManager;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GiftOptionsRequest;
+use App\Models\Celebrant;
 use App\Models\Gift;
 
 
@@ -16,6 +17,7 @@ class GiftOptionsController extends Controller
     {
         $gifts        = $request->input('gifts');
         $celebrant_id = $request->input('celebrant_id');
+        $celebrant    = Celebrant::findByCompany()->findOrFail($celebrant_id);
 
         foreach ($gifts as $gift) {
 

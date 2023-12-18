@@ -58,7 +58,7 @@ class Celebrant extends Model
         return $this->hasMany(Vote::class);
     }
 
-    public function scopeFindByCompany(Builder $query, $id)
+    public function scopeFindByCompany(Builder $query)
     {
         return $query->where('company_id', '=', Auth::user()->company_id);
     }
