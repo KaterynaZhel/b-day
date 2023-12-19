@@ -20,7 +20,7 @@ class GreetingController extends Controller
             ->select('greetings.*')
             ->where('company_id', '=', Auth::user()->company_id)
             ->leftjoin('celebrants', 'greetings.celebrant_id', '=', 'celebrants.id')
-            ->paginate(20);
+            ->paginate(10);
         return GreetingResource::collection($greetings);
 
     }
