@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\ApiManager;
 
 use App\Enums\VoteStatus;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VoteRequest;
 use App\Http\Resources\ManagerResources\VoteResource;
 use App\Models\Celebrant;
 use App\Models\Gift;
 use App\Models\Vote;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class VoteController extends Controller
 {
+    const RANDOM_HASH_LENGTH = 32;
+
     /**
      * Store a newly created resource in storage.
      */
@@ -32,13 +33,19 @@ class VoteController extends Controller
             $gift->save();
         }
 
-        // Generate a unique hash for the link using Hash facade (different hash for each email).
-        $celebrant = Celebrant::findOrFail($celebrant_id);
-        $email = $celebrant->email;
-        $hash = Hash::make($email);
+        // Generate a unique hash for the link using Hash facade (different hash for each id) for Vote
+        $hash = Str::random(self::RANDOM_HASH_LENGTH);
         $vote->hash = $hash;
         $vote->save();
 
-        return (new VoteResource($vote))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
+        // Generate a unique hash for the link using Hash facade (different hash for each email) for Celebrants
+        $celebrants = Celebrant::findByCompany()->get();
+        foreach ($celebrants as $celebrant) {
+            $email = $celebrant->email;
+            $celebrant->hash = hash('sha256', $email);
+            $celebrant->save();
+        }
+
+        return (new VoteResource($vote))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 }

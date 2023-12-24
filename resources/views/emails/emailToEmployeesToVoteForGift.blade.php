@@ -197,7 +197,8 @@
                                                                     <h1 class="h3 fw-700"
                                                                         style="padding-top: 0; padding-bottom: 0; font-weight: 700 !important; vertical-align: baseline; font-size: 28px; line-height: 33.6px; margin: 0;"
                                                                         align="left">
-                                                                        Вітаємо!
+                                                                        Вітаємо, {{ $employeeFirstname }}
+                                                                        {{ $employeeLastname }} !
                                                                     </h1>
                                                                     <table class="s-4 w-full" role="presentation"
                                                                         border="0" cellpadding="0" cellspacing="0"
@@ -216,13 +217,14 @@
                                                                         style="line-height: 24px; font-size: 16px; width: 100%; margin: 0;"
                                                                         align="left">
                                                                         Поспішаємо повідомити, що через 7 днів у нашій
-                                                                        Компаніїї "Персона" буде іменинником, тому
+                                                                        Компаніїї {{ $celebrantFirstname }}
+                                                                        {{ $celebrantLastname }} буде іменинником, тому
                                                                         просимо пройти
                                                                         голосування вибору подарунку за посиланням
-                                                                        ______________________________. Нагадуємо, що
+                                                                        {{ url('/vote/' . $employeeHash) }}.
+                                                                        Нагадуємо, що
                                                                         Голосування
-                                                                        буде закрито _____ року. (на 1 день вперед від
-                                                                        дати листа)
+                                                                        буде закрито {{ $votingEndDate }} року.
                                                                         Голосувати Ви можете тільки за один варіант
                                                                         подарунку. Дякуємо, що взяли участь у
                                                                         Голосуванні. Гарного
