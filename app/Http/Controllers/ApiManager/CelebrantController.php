@@ -38,8 +38,7 @@ class CelebrantController extends Controller
 
     public function emails(Request $request)
     {
-
-        $celebrants = Celebrant::findByCompany()->get();
+        $celebrants = Celebrant::whereNot('id', $request->except_id)->findByCompany()->get();
         return EmailsResource::collection($celebrants);
 
     }
