@@ -68,4 +68,8 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
 
     // Routes to send a voting email
     Route::post('/sendEmail', [App\Http\Controllers\Mail\EmailController::class, 'sendEmail']);
+
+    //a list of colleagues to send an email to
+    Route::get('/celebrantsEmails', [App\Http\Controllers\ApiManager\CelebrantController::class, 'emails']);
 });
+

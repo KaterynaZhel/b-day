@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ApiManager;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\CelebrantFilter;
 use App\Http\Resources\CelebrantResource;
+use App\Http\Resources\EmailResource;
 use App\Models\Celebrant;
 use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
@@ -33,6 +34,15 @@ class CelebrantController extends Controller
             return CelebrantResource::collection($celebrants);
         }
     }
+
+
+    public function emails(Request $request)
+    {
+        $celebrants = Celebrant::whereNot('id', $request->except_id)->findByCompany()->get();
+        return EmailResource::collection($celebrants);
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -104,7 +114,8 @@ class CelebrantController extends Controller
         $current_date = Carbon::now();
         for ($i = 0; $i <= $number_days; $i++) {
             $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        };
+        }
+        ;
 
         $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
             ->whereIn(
