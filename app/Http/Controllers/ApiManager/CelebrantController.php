@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ApiManager;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\CelebrantFilter;
 use App\Http\Resources\CelebrantResource;
-use App\Http\Resources\EmailsResource;
+use App\Http\Resources\EmailResource;
 use App\Models\Celebrant;
 use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
@@ -39,7 +39,7 @@ class CelebrantController extends Controller
     public function emails(Request $request)
     {
         $celebrants = Celebrant::whereNot('id', $request->except_id)->findByCompany()->get();
-        return EmailsResource::collection($celebrants);
+        return EmailResource::collection($celebrants);
 
     }
 
