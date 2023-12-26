@@ -221,7 +221,7 @@
                                                                         {{ $celebrantLastname }} буде іменинником, тому
                                                                         просимо пройти
                                                                         голосування вибору подарунку за посиланням
-                                                                        {{ url('/vote/' . $employeeHash) }}.
+                                                                        {{ url('/vote/' . $employeeHash . $votingHash) }}.
                                                                         Нагадуємо, що
                                                                         Голосування
                                                                         буде закрито {{ $votingEndDate }} року.

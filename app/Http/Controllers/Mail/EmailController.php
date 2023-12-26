@@ -16,21 +16,20 @@ class EmailController extends Controller
     {
 
         try {
-            $company_id = Auth::user()->company_id;
             $selectedEmployeeIds = $request->input('selectedEmployeeIds');
 
             // Convert comma-separated IDs to an array
             $selectedEmployeeIdsArray = explode(',', $selectedEmployeeIds);
 
             $celebrant_id = $request->input('celebrant_id');
-            $vote = Vote::where('celebrant_id', $celebrant_id)->first();
+            $vote = Vote::where('celebrant_id', $celebrant_id)->latest()->first();
             if (!$vote) {
                 throw new \Exception('Vote not found.');
             }
 
             $celebrant = Celebrant::findByCompany()->findOrFail($celebrant_id);
 
-            $employees = Celebrant::where('company_id', $company_id)
+            $employees = Celebrant::findByCompany()
                 ->whereNotIn('id', array_merge($selectedEmployeeIdsArray, [$celebrant_id]))
                 ->get();
 

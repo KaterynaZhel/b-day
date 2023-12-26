@@ -52,6 +52,7 @@ class EmailToVoteForGift extends Mailable
                 'employeeLastname' => $this->employee->lastname,
                 'employeeHash' => $this->employee->hash,
                 'votingEndDate' => $this->vote->end_at,
+                'votingHash' => $this->vote->hash,
                 'celebrantFirstname' => $this->celebrant->firstname,
                 'celebrantLastname' => $this->celebrant->lastname,
             ],
