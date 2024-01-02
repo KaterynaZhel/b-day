@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Celebrant;
+use App\Models\Vote;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -13,11 +15,18 @@ class EmailToVoteForGift extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $employee;
+    protected $vote;
+    protected $celebrant;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Celebrant $employee, Vote $vote, Celebrant $celebrant)
     {
+        $this->employee = $employee;
+        $this->vote = $vote;
+        $this->celebrant = $celebrant;
     }
 
     /**
@@ -38,6 +47,15 @@ class EmailToVoteForGift extends Mailable
     {
         return new Content(
             view: 'emails.emailToEmployeesToVoteForGift',
+            with: [
+                'employeeFirstname' => $this->employee->firstname,
+                'employeeLastname' => $this->employee->lastname,
+                'employeeHash' => $this->employee->hash,
+                'votingEndDate' => $this->vote->end_at,
+                'votingHash' => $this->vote->hash,
+                'celebrantFirstname' => $this->celebrant->firstname,
+                'celebrantLastname' => $this->celebrant->lastname,
+            ],
         );
     }
 
