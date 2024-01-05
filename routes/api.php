@@ -73,3 +73,4 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::get('/celebrantsEmails', [App\Http\Controllers\ApiManager\CelebrantController::class, 'emails']);
 });
 
+Route::get('/vote/{hash}', [App\Http\Controllers\Api\VoteController::class, 'show']);
