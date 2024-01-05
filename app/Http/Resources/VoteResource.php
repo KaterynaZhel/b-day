@@ -18,7 +18,7 @@ class VoteResource extends JsonResource
         return [
             'start_at' => $this->start_at,
             'end_at' => $this->end_at,
-            'celebrant' => $this->celebrant->setVisible(['lastname', 'firstname', 'middlename', 'birthday']),
+            'celebrant' => $this->celebrant->setVisible(['lastname', 'firstname', 'middlename', 'photo', 'birthday', 'position']),
             'hobbies' => $this->celebrant->hobbies->pluck('name'),
             'gifts' => GiftResource::collection($this->gifts),
         ];
