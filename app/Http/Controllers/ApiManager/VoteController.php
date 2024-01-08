@@ -21,7 +21,14 @@ class VoteController extends Controller
      */
     public function store(VoteRequest $request, $celebrant_id)
     {
-        $gifts = Gift::where('celebrant_id', $celebrant_id)->get();
+        // Get the selected gift IDs from the request
+        $selectedGiftIds = $request->input('selected_gifts', []);
+
+        // Get only the selected gifts based on their IDs
+        $gifts = Gift::where('celebrant_id', $celebrant_id)
+            ->whereIn('id', $selectedGiftIds)
+            ->get();
+
         $vote = Vote::create($request->all() + ['celebrant_id' => $celebrant_id]);
         $vote->start_at = now();
         $vote->end_at = now()->addDay();
@@ -40,6 +47,7 @@ class VoteController extends Controller
 
         // Generate a unique hash for the link using Hash facade (different hash for each email) for Celebrants
         $celebrants = Celebrant::findByCompany()->get();
+        // dd($celebrants);
         foreach ($celebrants as $celebrant) {
             $email = $celebrant->email;
             $celebrant->hash = hash('sha256', $email);
