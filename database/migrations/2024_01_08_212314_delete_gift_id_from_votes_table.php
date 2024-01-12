@@ -24,8 +24,10 @@ return new class extends Migration
     {
         Schema::table('votes', function (Blueprint $table) {
             $table->foreignId('gift_id')
+                ->nullable()
                 ->constrained()
-                ->onUpdate('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 };
