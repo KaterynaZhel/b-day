@@ -23,7 +23,8 @@ class VoteRequest extends FormRequest
     {
         return [
             'celebrant' => ['numeric', 'celebrant_id' => 'exists:celebrants,id'],
-            'gift' => ['numeric', 'gift_id' => 'exists:gifts,id'],
+            'selected_gifts' => 'required|array',
+            'selected_gifts.*' => 'exists:gifts,id',
         ];
     }
 }

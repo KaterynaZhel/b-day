@@ -12,7 +12,7 @@ class Vote extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['celebrant_id', 'gift_id', 'votes_count'];
+    protected $fillable = ['celebrant_id', 'votes_count'];
 
     protected $casts = [
         'start_at' => 'datetime',

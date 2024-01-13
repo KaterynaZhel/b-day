@@ -221,7 +221,10 @@
                                                                         {{ $celebrantLastname }} буде іменинником, тому
                                                                         просимо пройти
                                                                         голосування вибору подарунку за посиланням
-                                                                        {{ url('/vote/' . $employeeHash . $votingHash) }}.
+                                                                        <a href="{{ 'https://bday.intita.com/vote/' . $employeeHash . $votingHash }}"
+                                                                            target="_blank">
+                                                                            https://bday.intita.com/vote/{{ $employeeHash . $votingHash }}
+                                                                        </a>
                                                                         Нагадуємо, що
                                                                         Голосування
                                                                         буде закрито {{ $votingEndDate }} року.

@@ -10,7 +10,7 @@ class Gift extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'link', 'celebrant_id', 'price'];
+    protected $fillable = ['title', 'link', 'celebrant_id', 'price', 'vote_id'];
 
     public function vote(): BelongsTo
     {
