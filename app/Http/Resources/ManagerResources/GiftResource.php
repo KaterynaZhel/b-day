@@ -20,6 +20,7 @@ class GiftResource extends JsonResource
             'picture' => $this->picture,
             'link' => $this->link,
             'price' => $this->price,
+            'votes' => $this->voting_results_count,
         ];
     }
 }

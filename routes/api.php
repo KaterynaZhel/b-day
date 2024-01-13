@@ -74,3 +74,5 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
 });
 
 Route::get('/vote/{hash}', [App\Http\Controllers\Api\VoteController::class, 'show']);
+Route::get('/vote/statistics/{hash}', [App\Http\Controllers\Api\VoteController::class, 'statistics']);
+
