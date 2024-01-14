@@ -9,6 +9,8 @@ use App\Models\Vote;
 use Illuminate\Http\Request;
 use App\Models\Celebrant;
 use App\Models\VotingResult;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class VoteController extends Controller
 {
@@ -35,43 +37,47 @@ class VoteController extends Controller
 
     public function voting(Request $request, string $hash)
     {
-        // Extracting the last 32 characters as the voting hash
-        $votingHash   = substr($hash, -32);
-        $vote         = Vote::where('hash', $votingHash)->first();
+        try {
+            // Extracting the last 32 characters as the voting hash
+            $votingHash   = substr($hash, -32);
+            $vote         = Vote::where('hash', $votingHash)->firstOrFail();
 
-        // Extracting the first 64 characters as the employee hash
-        $employeeHash = substr($hash, 0, 64);
-        $employee     = Celebrant::where('hash', $employeeHash)->first();
+            // Extracting the first 64 characters as the employee hash
+            $employeeHash = substr($hash, 0, 64);
+            $employee     = Celebrant::where('hash', $employeeHash)->firstOrFail();
 
-        // Return 404 if the celebrant is not found
-        if (!$employee) {
-            abort(404);
-        }
+            // Return 404 if the celebrant is not found
+            if (!$employee) {
+                abort(404);
+            }
 
-        // Check if the celebrant has already voted
-        if ($this->hasAlreadyVoted($employee)) {
-            return response()->json(['error' => 'You have already voted.'], 422);
-        }
+            // Check if the celebrant has already voted
+            if ($this->hasAlreadyVoted($employee, $vote)) {
+                return response()->json(['error' => 'You have already voted.'], 422);
+            }
 
-        // Validate the gift_id
-        $request->validate([
-            'gift_id' => 'required|numeric|exists:gifts,id',
-        ]);
+            // Validate the gift_id
+            $request->validate([
+                'gift_id' => 'required|numeric|exists:gifts,id',
+            ]);
 
-        $votingResult = new VotingResult();
-        $votingResult->celebrant_id = $employee->id;
-        $votingResult->gift_id = $request->input('gift_id');
-
-        if ($vote) {
+            $votingResult = new VotingResult();
+            $votingResult->celebrant_id = $employee->id;
+            $votingResult->gift_id = $request->input('gift_id');
             $votingResult->vote_id = $vote->id;
-        }
-        $votingResult->save();
+            $votingResult->save();
 
-        return response()->json(['message' => 'Vote recorded successfully.']);
+            return response()->json(['message' => 'Vote recorded successfully.']);
+        } catch (ModelNotFoundException $e) {
+            Log::error('Record not found: ' . $e->getMessage());
+            return response()->json(['error' => 'Record not found.'], 404);
+        }
     }
 
-    private function hasAlreadyVoted($celebrant)
+    private function hasAlreadyVoted($celebrant, $vote)
     {
-        return VotingResult::where('celebrant_id', $celebrant->id)->exists();
+        return VotingResult::where('celebrant_id', $celebrant->id)
+            ->where('vote_id', $vote->id)
+            ->exists();
     }
 }
