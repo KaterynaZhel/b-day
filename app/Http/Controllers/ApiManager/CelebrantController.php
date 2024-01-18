@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Filters\CelebrantFilter;
 use App\Http\Resources\CelebrantResource;
 use App\Http\Resources\EmailResource;
+use App\Http\Resources\ManagerResources\VoteStatisticsResource;
 use App\Models\Celebrant;
 use App\Services\AddHobbiesToCelebrantService;
 use Carbon\Carbon;
@@ -73,6 +74,15 @@ class CelebrantController extends Controller
         $celebrant = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($id);
         return new CelebrantResource($celebrant);
     }
+
+    public function votingStatistics(string $id)
+    {
+        $celebrant = Celebrant::findByCompany()->findOrFail($id);
+        $vote      = $celebrant->votes()->orderByDesc('id')->first();
+        return new VoteStatisticsResource($vote);
+    }
+
+
 
     /**
      * Update the specified resource in storage.

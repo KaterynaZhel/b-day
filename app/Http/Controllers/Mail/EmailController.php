@@ -22,7 +22,7 @@ class EmailController extends Controller
             $selectedEmployeeIdsArray = explode(',', $selectedEmployeeIds);
 
             $celebrant_id = $request->input('celebrant_id');
-            $vote = Vote::where('celebrant_id', $celebrant_id)->latest()->first();
+            $vote         = Vote::where('celebrant_id', $celebrant_id)->latest()->first();
             if (!$vote) {
                 throw new \Exception('Vote not found.');
             }
@@ -32,6 +32,9 @@ class EmailController extends Controller
             $employees = Celebrant::findByCompany()
                 ->whereNotIn('id', array_merge($selectedEmployeeIdsArray, [$celebrant_id]))
                 ->get();
+
+            $vote->emails_sent = $employees->count();
+            $vote->save();
 
             foreach ($employees as $employee) {
                 dispatch(new SendEmailToVoteForGift($employee, $vote, $celebrant))->delay(now()->addMinutes(1));
