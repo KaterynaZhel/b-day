@@ -19,6 +19,7 @@ class GiftOptionsController extends Controller
         $celebrant_id = $request->input('celebrant_id');
         $celebrant    = Celebrant::findByCompany()->findOrFail($celebrant_id);
 
+        $createdGifts = [];
         foreach ($gifts as $gift) {
 
             $urlParts = parse_url($gift['link']);
@@ -26,13 +27,14 @@ class GiftOptionsController extends Controller
             if (isset($urlParts['scheme']) && isset($urlParts['host'])) {
                 $gift['link'] = $urlParts['scheme'] . '://' . $urlParts['host'] . $urlParts['path'];
 
-                $gift = Gift::create($gift + compact('celebrant_id'));
+
+                $createdGifts[] = Gift::create($gift + compact('celebrant_id'));
 
             }
 
         }
 
-        return response('', \Illuminate\Http\Response::HTTP_CREATED);
+        return response($createdGifts, \Illuminate\Http\Response::HTTP_CREATED);
     }
 }
 
