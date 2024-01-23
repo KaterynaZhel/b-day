@@ -2,19 +2,44 @@
 
 namespace App\Http\Controllers\ApiManager;
 
-use App\Enums\VoteStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VoteRequest;
 use App\Http\Resources\ManagerResources\VoteResource;
+use App\Http\Resources\ManagerResources\VoteStatisticsResourceIndex;
 use App\Models\Celebrant;
 use App\Models\Gift;
 use App\Models\Vote;
+use App\Models\VotingResult;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class VoteController extends Controller
 {
     const RANDOM_HASH_LENGTH = 32;
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $companyId = Celebrant::findByCompany()->value('company_id');
+
+        // Retrieve votes for Celebrant only for the current company
+        $votes = Vote::with('celebrant')
+            ->whereHas('celebrant', function ($query) use ($companyId) {
+                $query->where('company_id', $companyId);
+            })
+            ->orderByDesc('id')
+            ->paginate(11);
+
+        // Iterate through the retrieved votes and update the votes_count
+        foreach ($votes as $vote) {
+            $voted = VotingResult::where('vote_id', $vote->id)->count();
+            $vote->update(['votes_count' => $voted]);
+        }
+
+        return VoteStatisticsResourceIndex::collection($votes);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -32,7 +57,6 @@ class VoteController extends Controller
         $vote = Vote::create($request->all() + ['celebrant_id' => $celebrant_id]);
         $vote->start_at = now();
         $vote->end_at = now()->addDay();
-        $vote->status = VoteStatus::inProgress;
 
         // Associate each gift with the vote
         foreach ($gifts as $gift) {
