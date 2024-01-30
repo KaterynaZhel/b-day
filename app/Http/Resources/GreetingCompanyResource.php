@@ -17,7 +17,6 @@ class GreetingCompanyResource extends JsonResource
         return [
             'message_company' => $this->message_company,
             'celebrant_id' => $this->celebrant_id,
-            'publish_at' => $this->publish_at,
         ];
     }
 }

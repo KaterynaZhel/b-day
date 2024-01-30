@@ -29,12 +29,11 @@ class CelebrantResource extends JsonResource
             'position' => $this->position,
             'hobbies' => $this->hobbies->pluck('name', 'id'),
             'gift_budget' => $this->gift_budget,
-            'votes' => $this->votes->map(function ($vote) {
-                return [
-                    'start_at' => $vote->start_at,
-                    'end_at' => $vote->end_at,
-                ];
-            }),
+            'votes' => $this->votes->isEmpty() ? [] : [
+                'start_at' => $this->votes->last()->start_at,
+                'end_at' => $this->votes->last()->end_at,
+            ],
+            'hasNewGreetingCompany' => $this->isHasNewGreetingCompany(),
         ];
     }
 }
