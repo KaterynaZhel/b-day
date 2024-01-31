@@ -35,7 +35,7 @@ class FilterCelebrantRequest extends FormRequest
             'dayTo' => 'nullable|date_format:d',
             'position' => ['nullable', Rule::in(CelebrantPosition::$positions)],
             'nearestBirthdays' => 'nullable|numeric',
-            'birthdayRange' => 'nullable|string',
+            'birthdayRange' => 'nullable|string|regex:/^\d{2}\.\d{2}-\d{2}\.\d{2}$/',
             'name' => 'nullable|string',
 
         ];
