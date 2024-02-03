@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class VoteRequest extends FormRequest
+class EmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class VoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'celebrant' => ['numeric', 'celebrant_id' => 'exists:celebrants,id'],
-            'selected_gifts' => 'required|array',
-            'selected_gifts.*' => 'exists:gifts,id',
+            'celebrant_id' => ['numeric', 'celebrant_id' => 'exists:celebrants,id'],
+            'selectedEmployeeIds' => 'string',
         ];
     }
 }

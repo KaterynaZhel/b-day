@@ -14,7 +14,6 @@ class GreetingCompanyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
         return [
             'message_company' => $this->message_company,
             'celebrant_id' => $this->celebrant_id,

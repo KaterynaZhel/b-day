@@ -45,6 +45,7 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::post('/me', [App\Http\Controllers\ApiManager\LoginController::class, 'me'])->name('manager.me');
     Route::get('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'index'])->name('manager.index');
     Route::get('/celebrant/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'show'])->name('manager.show');
+    Route::get('/celebrant/votingStatistics/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'votingStatistics'])->name('manager.votingStatistics');
     Route::post('/celebrants', [App\Http\Controllers\ApiManager\CelebrantController::class, 'store'])->name('manager.store');
     Route::post('/celebrant/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'update'])->name('manager.update');
     Route::delete('/celebrants/{id}', [App\Http\Controllers\ApiManager\CelebrantController::class, 'destroy'])->name('manager.destroy');
@@ -52,6 +53,7 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::delete('/greetings/{id}', [App\Http\Controllers\ApiManager\GreetingController::class, 'destroy'])->name('manager.destroy');
     Route::get('/greetingsCompany', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'index'])->name('manager.greetingsCompany.index');
     Route::post('/greetingsCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'store'])->name('manager.greetingsCompany.store');
+    Route::get('/votes', [App\Http\Controllers\ApiManager\VoteController::class, 'index'])->name('manager.votes.index');
     Route::post('/votes/{id}', [App\Http\Controllers\ApiManager\VoteController::class, 'store'])->name('manager.votes.store');
 
     Route::get('/hobbies', [App\Http\Controllers\ApiManager\HobbyController::class, 'index']);
@@ -68,4 +70,11 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
 
     // Routes to send a voting email
     Route::post('/sendEmail', [App\Http\Controllers\Mail\EmailController::class, 'sendEmail']);
+
+    //a list of colleagues to send an email to
+    Route::get('/celebrantsEmails', [App\Http\Controllers\ApiManager\CelebrantController::class, 'emails']);
 });
+
+Route::get('/vote/{hash}', [App\Http\Controllers\Api\VoteController::class, 'show']);
+Route::get('/vote/statistics/{hash}', [App\Http\Controllers\Api\VoteController::class, 'statistics']);
+Route::post('/vote/voting/{hash}', [App\Http\Controllers\Api\VoteController::class, 'voting']);

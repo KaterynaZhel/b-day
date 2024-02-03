@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\ManagerResources;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GiftResource extends JsonResource
+class EmailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,9 @@ class GiftResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'picture' => $this->picture,
-            'link' => $this->link,
-            'price' => $this->price,
-            'votes' => $this->voting_results_count,
+            'lastname' => $this->lastname,
+            'firstname' => $this->firstname,
+            'email' => $this->email,
         ];
     }
 }
