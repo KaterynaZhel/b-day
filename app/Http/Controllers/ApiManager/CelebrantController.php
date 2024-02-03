@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiManager;
 
 use App\Http\Controllers\Controller;
 use App\Http\Filters\CelebrantFilter;
+use App\Http\Requests\FilterCelebrantRequest;
 use App\Http\Resources\CelebrantResource;
 use App\Http\Resources\EmailResource;
 use App\Http\Resources\ManagerResources\VoteStatisticsResource;
@@ -18,22 +19,12 @@ use Illuminate\Support\Facades\DB;
 
 class CelebrantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request, CelebrantFilter $filter)
-    {
-        $validated = $request->validate([
-            'number_days' => 'nullable|numeric',
-        ]);
 
-        if ($request->filled('number_days')) {
-            $number_days = $request->input('number_days');
-            return $this->nearestCelebrants($number_days);
-        } else {
-            $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->filter($filter)->paginate(12);
-            return CelebrantResource::collection($celebrants);
-        }
+    public function index(FilterCelebrantRequest $request, CelebrantFilter $filter)
+    {
+        $celebrants = Celebrant::findByCompany()->filter($filter)->paginate(12);
+        return CelebrantResource::collection($celebrants);
+
     }
 
 
@@ -118,22 +109,4 @@ class CelebrantController extends Controller
         }
     }
 
-    public function nearestCelebrants(int $number_days)
-    {
-        $next_week    = [];
-        $current_date = Carbon::now();
-        for ($i = 0; $i <= $number_days; $i++) {
-            $next_week[] = $current_date->copy()->addDay($i)->format('m-d');
-        }
-        ;
-
-        $celebrants = Celebrant::where('company_id', '=', Auth::user()->company_id)->orderBy('id', 'desc')
-            ->whereIn(
-                DB::raw("DATE_FORMAT(birthday,'%m-%d')"),
-                $next_week
-            )
-            ->paginate(20);
-
-        return CelebrantResource::collection($celebrants);
-    }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Filters;
 
-use App\Models\Celebrant;
+use App\Casts\CelebrantPosition;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CelebrantFilter extends Filter
 {
@@ -37,7 +39,7 @@ class CelebrantFilter extends Filter
      */
     public function position(string $position = null): Builder
     {
-        return $this->builder->where('position', 'like', "%$position%");
+        return $this->builder->where('position', array_search($position, CelebrantPosition::$positions));
     }
 
     /**
@@ -59,7 +61,7 @@ class CelebrantFilter extends Filter
      */
     public function birthdayFrom(string $birthdayFrom = null): Builder
     {
-        return $this->builder->where('birthday', '>=', $birthdayFrom);;
+        return $this->builder->where('birthday', '>=', $birthdayFrom);
     }
 
     /**
@@ -115,5 +117,72 @@ class CelebrantFilter extends Filter
     public function dayTo(string $dayTo = null): Builder
     {
         return $this->builder->whereDay('birthday', '<=', $dayTo);
+    }
+
+    /**
+     * Filter the Celebrants by the given firstname.
+     *
+     * @param  string|null  $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function name(string $name = null): Builder
+    {
+
+        if (mb_strlen($name) >= 3) {
+            return $this->builder
+                ->where(function (Builder $query) use ($name) {
+                    $query->where('firstname', 'like', "$name%")
+                        ->orWhere('lastname', 'like', "$name%");
+                });
+        }
+        return $this->builder;
+
+    }
+
+    /**
+     * //Filter celebrants with birthdays in range date(disregarding year).
+     *
+     * @param  array  $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function birthdayRange(string $range = null): Builder
+    {
+        list($dateFrom, $dateTo) = explode("-", $range);
+
+        //add 2020 (any leap year) so that the following list of dates can be generated
+        $dateFromWithYear = Carbon::parse($dateFrom . '.2020');
+        $dateToWithYear   = Carbon::parse($dateTo . '.2020');
+
+        if ($dateFromWithYear->greaterThan($dateToWithYear)) {
+            $dateFromWithYear->subYear();
+        }
+        $dates = Carbon::parse($dateFromWithYear)->daysUntil(Carbon::parse($dateToWithYear));
+
+        $newDates = [];
+        foreach ($dates as $date) {
+            $newDates[] = $date->format('m-d');
+
+        }
+
+        return $this->builder->whereIn(
+            DB::raw("DATE_FORMAT(birthday,'%m-%d')"),
+            $newDates
+        );
+
+    }
+
+    // Filter celebrants with birthdays in the coming days.
+    public function nearestBirthdays(int $number_days = null): Builder
+    {
+        $next_week    = [];
+        $current_date = Carbon::now();
+        for ($i = 0; $i <= $number_days; $i++) {
+            $next_week[] = $current_date->copy()->addDays($i)->format('m-d');
+        }
+
+        return $this->builder->whereIn(
+            DB::raw("DATE_FORMAT(birthday,'%m-%d')"),
+            $next_week
+        );
     }
 }
