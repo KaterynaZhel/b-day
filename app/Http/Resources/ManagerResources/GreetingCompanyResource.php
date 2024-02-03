@@ -15,6 +15,7 @@ class GreetingCompanyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'celebrant_id' => $this->celebrant_id,
             'celebrant' => $this->celebrant->setVisible(['id', 'lastname', 'firstname', 'birthday']),
             'company' => $this->company->setVisible(['id', 'name']),

@@ -27,7 +27,7 @@ class GreetingCompanyController extends Controller
             $number_days = $request->input('number_days');
             return $greetingCompanyfileterService->nearestCelebrants($number_days);
         } else {
-            $greetingsCompany = GreetingCompany::where('company_id', '=', Auth::user()->company_id)->paginate(10);
+            $greetingsCompany = GreetingCompany::findByCompany()->paginate(10);
             return GreetingCompanyResource::collection($greetingsCompany);
         }
     }
@@ -37,12 +37,23 @@ class GreetingCompanyController extends Controller
      */
     public function store(GreetingCompanyRequest $request, $celebrant_id, GreetingCompanyFilterService $greetingCompanyfileterService)
     {
-        $celebrant                     = Celebrant::where('company_id', '=', Auth::user()->company_id)->findOrFail($celebrant_id);
+        $celebrant                     = Celebrant::findByCompany()->findOrFail($celebrant_id);
         $greetingCompany               = GreetingCompany::create($request->all() + ['celebrant_id' => $celebrant_id]);
         $greetingCompany->company_id   = Auth::user()->company_id;
         $greetingCompany->celebrant_id = $celebrant->id;
         $greetingCompany->publish_at   = $greetingCompanyfileterService->GreetingDate($celebrant_id);
         $greetingCompany->save();
         return (new GreetingCompanyResource($greetingCompany))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
+    }
+
+    public function showGreetingsCompanyForCelebrant(Request $request, $celebrant_id)
+    {
+        $validated = $request->validate([
+            'celebrant' => ['numeric', 'celebrant_id' => 'exists:celebrants,id'],
+        ]);
+
+        $celebrant          = Celebrant::findByCompany()->findOrFail($celebrant_id);
+        $greetingsCompany   = $celebrant->greetingsCompany()->paginate(5);
+        return GreetingCompanyResource::collection($greetingsCompany);
     }
 }
