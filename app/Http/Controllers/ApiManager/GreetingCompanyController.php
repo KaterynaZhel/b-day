@@ -46,6 +46,22 @@ class GreetingCompanyController extends Controller
         return (new GreetingCompanyResource($greetingCompany))->response()->setStatusCode(\Illuminate\Http\Response::HTTP_CREATED);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $greetingCompany = GreetingCompany::findByCompany()->findOrFail($id);
+        if ($greetingCompany->delete()) {
+            return response()->json(['message' => 'Successfully Deleted']);
+        } else {
+            return response()->json(['message' => 'Delete Failed'])->setStatusCode(403);
+        }
+    }
+
+    /**
+     * Show greetings from the company for Celebrant.
+     */
     public function showGreetingsCompanyForCelebrant(Request $request, $celebrant_id)
     {
         $validated = $request->validate([
