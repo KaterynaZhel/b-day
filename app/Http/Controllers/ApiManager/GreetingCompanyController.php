@@ -47,6 +47,16 @@ class GreetingCompanyController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     */
+    public function update(GreetingCompanyRequest $request, string $id)
+    {
+        $greetingCompany = GreetingCompany::findByCompany()->findOrFail($id);
+        $greetingCompany->update($request->all());
+        return new GreetingCompanyResource($greetingCompany);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)

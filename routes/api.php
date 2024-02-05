@@ -53,7 +53,8 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
     Route::delete('/greetings/{id}', [App\Http\Controllers\ApiManager\GreetingController::class, 'destroy'])->name('manager.destroy');
     Route::get('/greetingsCompany', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'index'])->name('manager.greetingsCompany.index');
     Route::post('/greetingsCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'store'])->name('manager.greetingsCompany.store');
-    Route::delete('/greetingsCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'destroy'])->name('manager.greetingsCompany.destroy');
+    Route::post('/greetingCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'update'])->name('manager.greetingCompany.update');
+    Route::delete('/greetingCompany/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'destroy'])->name('manager.greetingCompany.destroy');
     Route::get('/showGreetingsCompanyForCelebrant/{id}', [App\Http\Controllers\ApiManager\GreetingCompanyController::class, 'showGreetingsCompanyForCelebrant'])->name('manager.greetingsCompany.showGreetingsCompanyForCelebrant');
     Route::get('/votes', [App\Http\Controllers\ApiManager\VoteController::class, 'index'])->name('manager.votes.index');
     Route::post('/votes/{id}', [App\Http\Controllers\ApiManager\VoteController::class, 'store'])->name('manager.votes.store');
