@@ -35,7 +35,7 @@ class GreetingFilter extends Filter
     {
 
         if ($publicationDateFrom) {
-            return $this->builder->where('greetings.created_at', '>=', $publicationDateFrom);
+            return $this->builder->where(DB::raw('DATE(greetings.created_at)'), '>=', $publicationDateFrom);
         }
 
         return $this->builder;
@@ -49,7 +49,7 @@ class GreetingFilter extends Filter
      */
     public function publicationDateTo(string $publicationDateTo = null): Builder
     {
-        return $this->builder->where('greetings.created_at', '<=', $publicationDateTo);
+        return $this->builder->where(DB::raw('DATE(greetings.created_at)'), '<=', $publicationDateTo);
 
     }
 
