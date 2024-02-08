@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiManager;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\GreetingCompanyFilter;
 use App\Http\Requests\GreetingCompanyRequest;
 use App\Http\Resources\ManagerResources\GreetingCompanyResource;
 use App\Models\Celebrant;
@@ -16,20 +17,14 @@ class GreetingCompanyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, GreetingCompanyFilterService $greetingCompanyfileterService)
+    public function index(Request $request, GreetingCompanyFilter $filter)
     {
-
-        $validated = $request->validate([
-            'number_days' => 'nullable|numeric',
-        ]);
-
-        if ($request->filled('number_days')) {
-            $number_days = $request->input('number_days');
-            return $greetingCompanyfileterService->nearestCelebrants($number_days);
-        } else {
-            $greetingsCompany = GreetingCompany::findByCompany()->paginate(10);
-            return GreetingCompanyResource::collection($greetingsCompany);
-        }
+        $greetingsCompany = GreetingCompany::findByCompany()
+            ->select('greeting_companies.*', 'celebrants.lastname', 'celebrants.firstname', 'celebrants.birthday')
+            ->leftjoin('celebrants', 'greeting_companies.celebrant_id', '=', 'celebrants.id')
+            ->orderByRaw('greeting_companies.publish_at')
+            ->filter($filter)->paginate(10);
+        return GreetingCompanyResource::collection($greetingsCompany);
     }
 
     /**
@@ -78,8 +73,8 @@ class GreetingCompanyController extends Controller
             'celebrant' => ['numeric', 'celebrant_id' => 'exists:celebrants,id'],
         ]);
 
-        $celebrant          = Celebrant::findByCompany()->findOrFail($celebrant_id);
-        $greetingsCompany   = $celebrant->greetingsCompany()->paginate(5);
+        $celebrant        = Celebrant::findByCompany()->findOrFail($celebrant_id);
+        $greetingsCompany = $celebrant->greetingsCompany()->paginate(5);
         return GreetingCompanyResource::collection($greetingsCompany);
     }
 }

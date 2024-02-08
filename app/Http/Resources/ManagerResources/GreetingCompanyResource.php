@@ -14,13 +14,23 @@ class GreetingCompanyResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if (empty($this->lastname)) {
+            $celebrant = $this->celebrant->setVisible(['id', 'lastname', 'firstname', 'birthday']);
+        } else {
+            $celebrant = [
+                'lastname' => $this->lastname,
+                'firstname' => $this->firstname,
+                'birthday' => $this->birthday,
+            ];
+        }
         return [
             'id' => $this->id,
             'celebrant_id' => $this->celebrant_id,
-            'celebrant' => $this->celebrant->setVisible(['id', 'lastname', 'firstname', 'birthday']),
+            'celebrant' => $celebrant,
             'company' => $this->company->setVisible(['id', 'name']),
             'message_company' => $this->message_company,
             'publish_at' => $this->publish_at,
+
         ];
     }
 }
