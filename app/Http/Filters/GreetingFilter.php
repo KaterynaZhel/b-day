@@ -10,8 +10,8 @@ use Carbon\Carbon;
 class GreetingFilter extends Filter
 {
     /**
-     * Filter the Celebrants by the given firstname.
-     *
+     * Filter friends by specified name.
+
      * @param  string|null  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
