@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Http\Controllers\Mail\EmailController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,9 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $emailController = new EmailController();
-        $schedule->call([$emailController, 'sendEmailToManagerAboutNearestCelebrants'])
-            ->dailyAt('9:00');
+        $schedule->command('email:send-email-to-manager-about-nearest-celebrants')->dailyAt('9:00');
     }
 
     /**

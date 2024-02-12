@@ -76,9 +76,6 @@ Route::middleware(['auth:api', 'isManager'])->prefix('manager')->group(function 
 
     //a list of colleagues to send an email to
     Route::get('/celebrantsEmails', [App\Http\Controllers\ApiManager\CelebrantController::class, 'emails']);
-
-    // Routes for sending emails to managers about nearest celebrants
-    Route::get('/sendEmailToManagerAboutNearestCelebrants', [App\Http\Controllers\Mail\EmailController::class, 'sendEmailToManagerAboutNearestCelebrants']);
 });
 
 Route::get('/vote/{hash}', [App\Http\Controllers\Api\VoteController::class, 'show']);

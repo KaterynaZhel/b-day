@@ -21,7 +21,7 @@ class Celebrant extends Model
     use HasFactory;
     use Filterable;
 
-    protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'email', 'company_id', 'position', 'user_id'];
+    protected $fillable = ['lastname', 'firstname', 'middlename', 'birthday', 'email', 'company_id', 'position'];
 
     protected $casts = [
         'position' => CelebrantPosition::class,
@@ -60,11 +60,6 @@ class Celebrant extends Model
     public function votes(): HasMany
     {
         return $this->hasMany(Vote::class);
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function scopeFindByCompany(Builder $query)
