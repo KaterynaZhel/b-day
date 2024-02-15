@@ -7,11 +7,14 @@ use App\Http\Requests\EmailRequest;
 use App\Jobs\SendEmailToVoteForGift;
 use App\Models\Celebrant;
 use App\Models\Vote;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class EmailController extends Controller
 {
+
+    /**
+     * Send email to employees to vote for gift.
+     */
     public function sendEmail(EmailRequest $request)
     {
 

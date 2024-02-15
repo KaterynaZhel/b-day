@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Casts\UserPhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -57,13 +59,11 @@ class User extends Authenticatable implements JWTSubject
     public function isAdmin()
     {
         return $this->role == self::ADMIN_ROLE;
-
     }
 
     public function isManager()
     {
         return $this->role == self::MANAGER_ROLE;
-
     }
     // Rest omitted for brevity
 
@@ -87,7 +87,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function company()
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
