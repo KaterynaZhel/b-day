@@ -45,6 +45,13 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input class="form-control" value="{{ $celebrant->email ?? ''}}" id="email" name="email"
+                    placeholder="E-mail">
+            </div>
+
             <div class="form-group">
                 <label for="company">Компанія</label>
                 <select id="company" name="company_id" class="form-control select2bs4" style="width: 100%;">
