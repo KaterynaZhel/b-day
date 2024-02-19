@@ -18,6 +18,9 @@
                 <b>Компанія</b> <a class="float-right">{{$celebrant->company->name ?? 'Не визначено'}}</a>
             </li>
             <li class="list-group-item">
+                <b>E-mail</b> <a class="float-right">{{$celebrant->email}}</a>
+            </li>
+            <li class="list-group-item">
                 <b>Роль</b> <a class="float-right">{{$celebrant->position}}</a>
             </li>
 
@@ -43,8 +46,6 @@
         </div>
 
         @include('includes.admin.showGreetingsCompany')
-        @include('includes.admin.showGifts')
-
 
     </div>
     @endsection
