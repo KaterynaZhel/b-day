@@ -65,7 +65,7 @@ class CelebrantController extends Controller
      */
     public function show(Celebrant $celebrant)
     {
-        $greetingsCompany = GreetingCompany::all()->where('celebrant_id', "==", $celebrant->id);
+        $greetingsCompany = $celebrant->greetingsCompany;
         return view('admin.celebrants.show', compact('celebrant', 'greetingsCompany'));
     }
 
