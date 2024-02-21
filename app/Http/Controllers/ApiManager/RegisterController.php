@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -72,11 +73,15 @@ class RegisterController extends Controller
             'site' => $data['company_site'] ?? null,
         ]);
 
-        return User::create([
+        $user = User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => User::MANAGER_ROLE,
             'company_id' => $company->id,
         ]);
+
+        event(new Registered($user));
+
+        return $user;
     }
 }
