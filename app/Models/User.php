@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\UserPhoto;
+use App\Notifications\EmailVerificationNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -90,5 +91,12 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    // Method to send email verification
+    public function sendEmailVerificationNotification()
+    {
+        // We override the default notification and will use our own
+        $this->notify(new EmailVerificationNotification());
     }
 }
