@@ -11,7 +11,9 @@ class EmailVerificationPromptController extends Controller
     public function __invoke(Request $request)
     {
         return $request->user()->hasVerifiedEmail()
-            ? 'verified'
-            : 'verify email';
+            ? response()->json(['message' => 'verified'])
+            : response()->json(['message' => 'verify email']);
+
+
     }
 }
