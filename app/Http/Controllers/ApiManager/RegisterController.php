@@ -80,7 +80,7 @@ class RegisterController extends Controller
             'company_id' => $company->id,
         ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         return $user;
     }

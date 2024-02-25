@@ -12,9 +12,9 @@ class EmailVerificationNotificationController extends Controller
     public function __invoke(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return 'verified';
+            return response()->json(['message' => 'verified']);
         }
         $request->user()->sendEmailVerificationNotification();
-        return 'Verification link sent!';
+        return response()->json(['message' => 'Verification link sent!']);
     }
 }
