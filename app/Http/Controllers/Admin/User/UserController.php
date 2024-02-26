@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserUpdateRequest;
+use App\Models\Company;
 use App\Models\User;
+use App\Services\FileUploadService;
 
 class UserController extends Controller
 {
@@ -18,43 +21,32 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', [
+            'user' => $user,
+            'companies' => Company::all(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserUpdateRequest $request, FileUploadService $fileUploadService, User $user)
     {
-        //
+
+        if ($request->hasFile('photoFile')) {
+            $file             = $request->file('photoFile');
+            $filePath         = $fileUploadService->uploadFile($file, 'UserPhoto');
+            $user->photo      = $filePath;
+        }
+
+        $user->update(request(['lastname', 'name', 'middlename', 'email', 'company_id']));
+
+        $user->save();
+        return redirect('admin/users')->withSuccess('Менеджер був успішно оновлений');
     }
 
     /**
