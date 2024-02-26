@@ -55,7 +55,7 @@
                                             <form method="post" action="{{ route('admin.users.destroy', $user->id) }}">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="btn destroy-btn btn-danger btn-sm"
+                                                <button type="submit" class="btn destroy-btn-user btn-danger btn-sm"
                                                     style="width:33px; height:30px; margin:4px 4px;">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
