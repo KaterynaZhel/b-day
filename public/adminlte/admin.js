@@ -29,4 +29,11 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $('.destroy-btn-user').click(function () {
+        var res_greeting = confirm('Ви дійсно бажаєте видалити даного Менеджера?');
+        if (!res_greeting) {
+            return false;
+        }
+    });
 })
