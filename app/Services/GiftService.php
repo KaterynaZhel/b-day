@@ -21,6 +21,7 @@ class GiftService
 {
     public function generateGifts(Celebrant $celebrant)
     {
+        Log::debug('start function generateGifts');
         $hobbies = collect($celebrant->hobbies()->pluck('name'))->implode(',');
 
         $prompt = PromptTemplate::create(template: 'Які ідеї подарунків для співробітника по імені {firstname} та прізвищу {lastname}, який народився {date}, 
