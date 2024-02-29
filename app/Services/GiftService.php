@@ -58,7 +58,8 @@ class GiftService
                 ],
             ],
         ]);
-        $results  = [];
+        Log::debug('$response ' . $response);
+        $results = [];
         try {
             $gifts_AI = Arr::get(json_decode($response->getBody(), true, $depth = 512, JSON_THROW_ON_ERROR), 'choices.0.message.content', []);
             $gifts_AI = Arr::pluck(json_decode($gifts_AI, true, $depth = 512, JSON_THROW_ON_ERROR)['data'], 'gift name');
