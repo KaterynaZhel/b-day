@@ -154,7 +154,7 @@ class GiftService
             }
 
         } catch (\Throwable $exception) {
-            dd($exception->getMessage() . $exception->getTraceAsString());
+            // dd($exception->getMessage() . $exception->getTraceAsString());
             return [];
         }
     }
